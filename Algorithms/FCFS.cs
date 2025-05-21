@@ -90,8 +90,18 @@ namespace Algorithms
         public async Task<(List<Process> Processes, double AvgWaitTime, double AvgTurnaroundTime)> RunAsync(
              List<Process> processes,
              Panel panel2,
-             Panel panel7)
+             Panel panel7,
+             Label CurrentJob,
+             Label CurrentTimelabel,
+             Label CPUlabel,
+             Label WaitingLabel,
+             Label TurnaroundLabel,
+             DataGridView Jobpool,
+             TrackBar SpeedTB)
         {
+            double total = 0;
+            double waiting = 0;
+            double turnaround = 0;
             var sorted = processes.OrderBy(p => p.ArrivalTime).ThenBy(p => p.ID).ToList();
             int currentTime = 0;
 
@@ -110,7 +120,6 @@ namespace Algorithms
                     {
                         DrawReadyList(panel7, sorted[j], sorted[j].BurstTime.ToString());
                     }
-                    
                 }
                 if (currentTime < process.ArrivalTime)
                 {
@@ -125,10 +134,8 @@ namespace Algorithms
                             space = 3;
                         }
                         DrawGanttChart(panel2, EmptyCpu, space, isEmptyCpu);
-                        //await Task.Delay(500); // mô phỏng 1s thực tế
                         currentTime++;
                         
-                        //await Task.Delay(500);
                     }
                     i -= 1;
                     xReady = 50;
@@ -137,8 +144,12 @@ namespace Algorithms
                 }
                
                 process.StartTime = currentTime;
+                Jobpool.Rows[i].Cells[2].Value = process.StartTime;
                 process.WaitTime = currentTime - process.ArrivalTime;
+                waiting += process.WaitTime;
 
+                double tmp = ((double)waiting / sorted.Count);
+                WaitingLabel.Text = $"{tmp:F3}";
                 // Chạy theo đơn vị thời gian
                 for (int j = 0; j < process.BurstTime; j++)
                 {
@@ -148,35 +159,45 @@ namespace Algorithms
                         space = 3;
                     }
                     DrawGanttChart(panel2, process, space);
-                    await Task.Delay(500); // mô phỏng 1s thực tế
+                    await Task.Delay(1100 - SpeedTB.Value); // mô phỏng 1s thực tế
 
+                    CurrentTimelabel.Text = $"{currentTime}";
                     currentTime++;
+                    CurrentTimelabel.Text += $" -> {currentTime}";
+
                     for (int t = i + 1; t < sorted.Count; t++)
                     {
                         if (currentTime == sorted[t].ArrivalTime)
                         {
 
                             DrawReadyList(panel7, sorted[t], sorted[t].BurstTime.ToString());
-                            await Task.Delay(300);
+                            await Task.Delay(1100 - SpeedTB.Value);
                         }
-
                     }
-                   
                 }
-                if(!(i < sorted.Count - 1 && currentTime < sorted[i + 1].ArrivalTime))
+                total += process.BurstTime;
+                double CPU = ((double)total / currentTime) * 100;
+                CPUlabel.Text = $"{CPU:F2}%"; // hiển thị 2 chữ số thập phân
+                CurrentJob.Text = $"JOB {process.ID}";
+
+                if (!(i < sorted.Count - 1 && currentTime < sorted[i + 1].ArrivalTime))
                 {
                     panel7.Invalidate();
                 }
+
                 xReady = 50;
                 //MessageBox.Show($"chạy xong tiến trình ${process.ID}");
                 process.FinishTime = currentTime;
                 process.TurnaroundTime = process.FinishTime - process.ArrivalTime;
                 process.IsCompleted = true;
-            }
 
+                Jobpool.Rows[i].Cells[3].Value = process.FinishTime;
+                turnaround += process.TurnaroundTime;
+                double tmpTurn = ((double)turnaround / sorted.Count) ;
+                TurnaroundLabel.Text = $"{tmpTurn:F3}";
+            }
             double avgWaitTime = sorted.Average(p => p.WaitTime);
             double avgTurnaroundTime = sorted.Average(p => p.TurnaroundTime);
-
             return (sorted, avgWaitTime, avgTurnaroundTime);
         }
     }

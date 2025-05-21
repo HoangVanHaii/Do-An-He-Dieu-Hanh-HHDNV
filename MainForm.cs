@@ -38,17 +38,25 @@ namespace CPUSchedulerProject
         private void numProcess_TextChanged(object sender, EventArgs e)
         {
             string inp = numProcess.Text;
-            if (!string.IsNullOrWhiteSpace(inp))
+            try
             {
                 JobPool.Rows.Clear();
                 int row = int.Parse(inp);
                 for (int i = 0; i < row; i++)
                 {
                     JobPool.Rows.Add();
+                    JobPool.Rows[i].Cells[2].Value = 0;
+                    JobPool.Rows[i].Cells[3].Value = 0;
                     JobPool.Rows[i].HeaderCell.Value = "P" + (i + 1).ToString();
                 }
                 JobPool.Invalidate();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi dữ liệu đầu vào: " + ex.Message);
+                return;
+            }
+            
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -85,7 +93,7 @@ namespace CPUSchedulerProject
             if (algorithm == "FCFS")
             {
                 FCFS scheduler = new FCFS();
-                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7);
+                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel,TurnaroundLabel, JobPool, SpeedTB);
 
                 //string result = "";
                 //foreach (var p in resultList)
