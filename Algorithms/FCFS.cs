@@ -12,7 +12,7 @@ namespace Algorithms
     {
         int xGant = 50;
         int xReady = 50;
-        private void DrawGanttChart(Panel panel2, Process process)
+        private void DrawGanttChart(Panel panel2, Process process, int space, bool isEmptyCpu = false)
         {
             Graphics g = panel2.CreateGraphics();
             //g.Clear(panel2.BackColor);
@@ -22,18 +22,33 @@ namespace Algorithms
             int spacing = 1;
                     // Chọn màu theo ID (tuỳ chỉnh)
             Color color = Color.Red;
-            if (process.ID == 2) color = Color.DarkGray;
+            if (process.ID == 2) color = Color.Brown;
             if (process.ID == 3) color = Color.Orange;
             if (process.ID == 4) color = Color.BlueViolet;
             if (process.ID == 5) color = Color.Green;
-            if(process.ID == 1000) color = Color.White;
+            if(process.ID == 1000) color = Color.DarkGray;
 
             // Vẽ ID tiến trình
             Brush brush = new SolidBrush(color);
             Rectangle rect = new Rectangle(xGant, y, unitWidth, height);
             g.FillRectangle(brush, rect);
             g.DrawString("1" , panel2.Font, Brushes.Black, xGant + 2, y + 30);
-            xGant += unitWidth + spacing;
+
+            if (isEmptyCpu)
+            {
+                Pen pen = new Pen(Color.Black, 1);
+
+                // Đường ngang ở 1/4 chiều cao
+                int y1 = rect.Top + rect.Height / 4;
+                g.DrawLine(pen, rect.Left, y1, rect.Right, y1);
+
+                // Đường ngang ở 3/4 chiều cao
+                int y2 = rect.Top + (rect.Height * 3) / 4;
+                g.DrawLine(pen, rect.Left, y2, rect.Right, y2);
+
+            }
+
+            xGant += unitWidth + spacing + space ;
             
         }
         private void DrawReadyList(Panel panel7, Process process, string text)
@@ -45,7 +60,7 @@ namespace Algorithms
             int spacing = 1;
             // Chọn màu theo ID (tuỳ chỉnh)
             Color color = Color.Red;
-            if (process.ID == 2) color = Color.DarkGray;
+            if (process.ID == 2) color = Color.Brown;
             if (process.ID == 3) color = Color.Orange;
             if (process.ID == 4) color = Color.BlueViolet;
             if (process.ID == 5) color = Color.Green;
@@ -95,11 +110,17 @@ namespace Algorithms
                 }
                 if (currentTime < process.ArrivalTime)
                 {
+                    bool isEmptyCpu = true;
                     for (int j = currentTime; j < process.ArrivalTime; j++)
                     {
                         Process EmptyCpu = new Process();
                         EmptyCpu.ID = 1000;
-                        DrawGanttChart(panel2, EmptyCpu);
+                        int space = 0;
+                        if (j == process.ArrivalTime - 1)
+                        {
+                            space = 3;
+                        }
+                        DrawGanttChart(panel2, EmptyCpu, space, isEmptyCpu);
                         await Task.Delay(1000); // mô phỏng 1s thực tế
                         currentTime++;
                     }
@@ -117,7 +138,12 @@ namespace Algorithms
                 // Chạy theo đơn vị thời gian
                 for (int j = 0; j < process.BurstTime; j++)
                 {
-                    DrawGanttChart(panel2, process);
+                    int space = 0;
+                    if(j == process.BurstTime - 1)
+                    {
+                        space = 3;
+                    }
+                    DrawGanttChart(panel2, process, space);
                     await Task.Delay(1000); // mô phỏng 1s thực tế
 
                     currentTime++;
