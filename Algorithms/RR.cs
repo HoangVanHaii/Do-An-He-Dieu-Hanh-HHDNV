@@ -132,11 +132,8 @@ namespace CPUSchedulerProject.Algorithms
 
                 // Vẽ hàng đợi readyQueue ra panel7
                 panel7.Invalidate(); // xóa panel cũ
-                foreach (var p in readyQueue)
-                {
-                    DrawReadyList(panel7, p, p.BurstTime.ToString());
-                    await Task.Delay(1100 - SpeedTB.Value);
-                }
+                await Task.Delay(50); // delay để nhìn rõ hơn
+                
                 if (readyQueue.Count == 0)
                 {
                     xReady = 50;
@@ -150,7 +147,12 @@ namespace CPUSchedulerProject.Algorithms
                 }
 
                 var currentProcess = readyQueue.Dequeue();
-
+                xReady = 50;
+                foreach (var p in readyQueue)
+                {
+                    DrawReadyList(panel7, p, p.BurstTime.ToString());
+                }
+                await Task.Delay(50); // delay để nhìn rõ hơn
                 int executeTime = Math.Min(quantum, remainingBurst[currentProcess.ID]);
 
                 // Nếu lần đầu chạy thì set StartTime
@@ -191,8 +193,9 @@ namespace CPUSchedulerProject.Algorithms
                     // Cập nhật ready queue thêm những tiến trình mới đến (ngoại trừ tiến trình hiện tại)
                     foreach (var proc in sorted)
                     {
-                        if (proc.ArrivalTime <= currentTime && !proc.IsCompleted && !readyQueue.Contains(proc) && proc.ID != currentProcess.ID)
+                        if (proc.ArrivalTime <= currentTime && !proc.IsCompleted && !readyQueue.Contains(proc) && proc.ID != currentProcess.ID) { 
                             readyQueue.Enqueue(proc);
+                        }
                     }
                     // Đưa tiến trình chưa hoàn thành về cuối queue
                     readyQueue.Enqueue(currentProcess);
