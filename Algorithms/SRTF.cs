@@ -22,8 +22,6 @@ namespace Algorithms
             int spacing = 1;
             // Chọn màu theo ID (tuỳ chỉnh)
             Color color = GetColorByProcessID(process.ID);
-
-            // Vẽ ID tiến trình
             Brush brush = new SolidBrush(color);
             Rectangle rect = new Rectangle(xGant, y, unitWidth, height);
             g.FillRectangle(brush, rect);
@@ -139,11 +137,17 @@ namespace Algorithms
                 {
                     currentProcess = availableProcesses.First();
 
-                    if (currentProcess.ID != lastProcessID)
+                    
+                    foreach(var process in availableProcesses)
                     {
-                        await Task.Delay(20);
-                        DrawReadyList(panel7, currentProcess, currentProcess.RemainingTime.ToString());
-                        lastProcessID = currentProcess.ID;
+                        if (process.ArrivalTime <= currentTime &&
+                            !process.IsCompleted &&
+                            process != currentProcess)
+                        {
+                            await Task.Delay(20);
+                            DrawReadyList(panel7, process, process.RemainingTime.ToString());
+                            lastProcessID = process.ID;
+                        }
                     }
 
                     if (currentProcess.StartTime == -1)
@@ -197,7 +201,7 @@ namespace Algorithms
                 }
 
                 panel7.Invalidate();
-                //xReady = 50;
+                xReady = 50;
             }
 
             double avgWaitTime = processList.Average(p => p.WaitTime);
