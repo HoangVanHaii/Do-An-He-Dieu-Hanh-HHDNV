@@ -124,6 +124,7 @@ namespace CPUSchedulerProject.Algorithms
             int totalProcess = sorted.Count;
 
             xReady = 50; // reset vị trí vẽ ready queue
+            xGant = 50; // reset vị trí vẽ gantt chart
 
             while (completed < totalProcess)
             {
@@ -143,11 +144,12 @@ namespace CPUSchedulerProject.Algorithms
                 }
                 if (readyQueue.Count == 0)
                 {
-                    await Task.Delay(50); // delay để nhìn rõ hơn
+                    xReady = 50;
+                    //await Task.Delay(50); // delay để nhìn rõ hơn
+                    await Task.Delay(1100 - SpeedTB.Value);
                     //MessageBox.Show("2");
                     Process idle = new Process { ID = 1000 };
                     DrawGanttChart(panel2, idle, 1, true);
-                    await Task.Delay(1100 - SpeedTB.Value);
                     currentTime++;
                     continue;
                 }
