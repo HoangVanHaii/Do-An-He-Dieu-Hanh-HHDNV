@@ -46,7 +46,30 @@ namespace Algorithms
             }
             xGant += unitWidth + spacing + space ;
         }
-        private void DrawReadyList(Panel panel7, Process process, string text)
+
+    public Color GetColorByProcessID(int id){
+        switch (id)
+        {
+            case 1: return Color.Red;
+            case 2: return Color.Brown;
+            case 3: return Color.Orange;
+            case 4: return Color.BlueViolet;
+            case 5: return Color.Green;
+            case 6: return Color.Yellow;
+            case 7: return Color.Purple;
+            case 8: return Color.Teal;
+            case 9: return Color.Gray;
+            case 10: return Color.Pink;
+            case 11: return Color.Cyan;
+            case 12: return Color.Lime;
+            case 13: return Color.Magenta;
+            case 14: return Color.DarkBlue;
+            case 1000: return Color.DarkGray;
+            default: return Color.Black; // mặc định nếu không có ID phù hợp
+        }
+    }
+
+    private void DrawReadyList(Panel panel7, Process process, string text)
         {
             //g.Clear(panel2.BackColor);
             int unitWidth = 30; // Mỗi đơn vị thời gian = 20 pixel
@@ -54,11 +77,7 @@ namespace Algorithms
             int y = panel7.Height / 3;
             int spacing = 1;
             // Chọn màu theo ID (tuỳ chỉnh)
-            Color color = Color.Red;
-            if (process.ID == 2) color = Color.Brown;
-            if (process.ID == 3) color = Color.Orange;
-            if (process.ID == 4) color = Color.BlueViolet;
-            if (process.ID == 5) color = Color.Green;
+            Color color = GetColorByProcessID(process.ID);
 
             // Vẽ ID tiến trình
             using (Graphics g = panel7.CreateGraphics())
