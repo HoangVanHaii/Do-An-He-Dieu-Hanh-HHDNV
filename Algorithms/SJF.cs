@@ -94,40 +94,42 @@ namespace Algorithms
         }
 
         public async Task<(List<Process> Processes, double AvgWaitTime, double AvgTurnaroundTime)> RunAsync(
-            List<Process> processes,
-            Panel panel2,
-            Panel panel7,
-            Label CurrentJob,
-            Label CurrentTimelabel,
-            Label CPUlabel,
-            Label WaitingLabel,
-            Label TurnaroundLabel,
-            DataGridView Jobpool,
-            TrackBar SpeedTB)
+    List<Process> processes,
+    Panel panel2,
+    Panel panel7,
+    Label CurrentJob,
+    Label CurrentTimelabel,
+    Label CPUlabel,
+    Label WaitingLabel,
+    Label TurnaroundLabel,
+    DataGridView Jobpool,
+    TrackBar SpeedTB)
         {
             double total = 0, waiting = 0, turnaround = 0;
             int currentTime = 0;
             int completed = 0;
-            var readyQueue = new List<Process>();
             var processesCopy = processes.Select(p => new Process
             {
                 ID = p.ID,
                 ArrivalTime = p.ArrivalTime,
                 BurstTime = p.BurstTime
             }).ToList();
-            xGant = 50; // Reset vẽ Gantt cho mỗi lượt
 
             while (completed < processesCopy.Count)
             {
-                readyQueue.Clear();
-                readyQueue.AddRange(processesCopy.Where(p => p.ArrivalTime <= currentTime && !p.IsCompleted));
-                readyQueue = readyQueue.OrderBy(p => p.BurstTime).ThenBy(p => p.ArrivalTime).ThenBy(p => p.ID).ToList();
+                // Lấy danh sách tiến trình đã đến và chưa hoàn thành
+                var readyQueue = processesCopy
+                    .Where(p => p.ArrivalTime <= currentTime && !p.IsCompleted)
+                    .OrderBy(p => p.BurstTime)
+                    .ThenBy(p => p.ArrivalTime)
+                    .ThenBy(p => p.ID)
+                    .ToList();
 
                 if (readyQueue.Count == 0)
                 {
+                    // CPU idle
                     await Task.Delay(20);
-                    Process idle = new Process { ID = 1000 };
-                    DrawGanttChart(panel2, idle, 3, true);
+                    DrawGanttChart(panel2, new Process { ID = 1000 }, 3, true);
                     await Task.Delay(1100 - SpeedTB.Value);
                     currentTime++;
                     xReady = 50;
@@ -142,7 +144,6 @@ namespace Algorithms
 
                 int index = processes.FindIndex(p => p.ID == process.ID);
                 Jobpool.Rows[index].Cells[2].Value = process.StartTime;
-
                 WaitingLabel.Text = $"{(waiting / processes.Count):F3}";
 
                 for (int i = 0; i < process.BurstTime; i++)
@@ -150,13 +151,24 @@ namespace Algorithms
                     await Task.Delay(20);
                     DrawGanttChart(panel2, process, i == process.BurstTime - 1 ? 3 : 0);
                     await Task.Delay(1100 - SpeedTB.Value);
-                    CurrentTimelabel.Text = $"{currentTime} -> {currentTime + 1}";
-                    currentTime++;
 
-                    foreach (var p in processesCopy.Where(p => p.ArrivalTime == currentTime && !p.IsCompleted))
+                    currentTime++;
+                    CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
+
+                    // Cập nhật danh sách ready *loại bỏ tiến trình đang chạy* trong Ready list
+                    var readyToDraw = processesCopy
+                        .Where(p => p.ArrivalTime <= currentTime && !p.IsCompleted && p.ID != process.ID)
+                        .OrderBy(p => p.BurstTime)
+                        .ThenBy(p => p.ArrivalTime)
+                        .ThenBy(p => p.ID)
+                        .ToList();
+
+                    panel7.Invalidate();
+                    xReady = 50;
+                    foreach (var p in readyToDraw)
                     {
+                        await Task.Delay(20);
                         DrawReadyList(panel7, p, p.BurstTime.ToString());
-                        await Task.Delay(1100 - SpeedTB.Value);
                     }
                 }
 
@@ -172,13 +184,29 @@ namespace Algorithms
                 completed++;
 
                 Jobpool.Rows[index].Cells[3].Value = process.FinishTime;
-                xReady = 50;
+
+                // Cập nhật lại Ready list khi tiến trình kết thúc
+                var updatedReadyQueue = processesCopy
+                    .Where(p => p.ArrivalTime <= currentTime && !p.IsCompleted)
+                    .OrderBy(p => p.BurstTime)
+                    .ThenBy(p => p.ArrivalTime)
+                    .ThenBy(p => p.ID)
+                    .ToList();
+
                 panel7.Invalidate();
+                xReady = 50;
+                foreach (var p in updatedReadyQueue)
+                {
+                    await Task.Delay(20);
+                    DrawReadyList(panel7, p, p.BurstTime.ToString());
+                }
             }
 
             double avgWaitTime = processesCopy.Average(p => p.WaitTime);
             double avgTurnaroundTime = processesCopy.Average(p => p.TurnaroundTime);
             return (processesCopy, avgWaitTime, avgTurnaroundTime);
         }
+
+
     }
 }
