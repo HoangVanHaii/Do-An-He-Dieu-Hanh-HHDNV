@@ -47,27 +47,27 @@ namespace Algorithms
             xGant += unitWidth + spacing + space ;
         }
 
-    public Color GetColorByProcessID(int id){
-        switch (id)
-        {
-            case 1: return Color.Red;
-            case 2: return Color.Brown;
-            case 3: return Color.Orange;
-            case 4: return Color.BlueViolet;
-            case 5: return Color.Green;
-            case 6: return Color.Yellow;
-            case 7: return Color.Purple;
-            case 8: return Color.Teal;
-            case 9: return Color.Gray;
-            case 10: return Color.Pink;
-            case 11: return Color.Cyan;
-            case 12: return Color.Lime;
-            case 13: return Color.Magenta;
-            case 14: return Color.DarkBlue;
-            case 1000: return Color.DarkGray;
-            default: return Color.Black; // mặc định nếu không có ID phù hợp
+        public Color GetColorByProcessID(int id){
+            switch (id)
+            {
+                case 1: return Color.Red;
+                case 2: return Color.Brown;
+                case 3: return Color.Orange;
+                case 4: return Color.BlueViolet;
+                case 5: return Color.Green;
+                case 6: return Color.Yellow;
+                case 7: return Color.Purple;
+                case 8: return Color.Teal;
+                case 9: return Color.Gray;
+                case 10: return Color.Pink;
+                case 11: return Color.Cyan;
+                case 12: return Color.Lime;
+                case 13: return Color.Magenta;
+                case 14: return Color.DarkBlue;
+                case 1000: return Color.DarkGray;
+                default: return Color.Black; // mặc định nếu không có ID phù hợp
+            }
         }
-    }
 
     private void DrawReadyList(Panel panel7, Process process, string text)
         {
