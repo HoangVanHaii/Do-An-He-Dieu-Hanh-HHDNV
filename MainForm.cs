@@ -114,7 +114,8 @@ namespace CPUSchedulerProject
             }
             else if(algorithm == "RR")
             {
-                string tmpQuantum = AlorithmCombo.SelectedItem?.ToString();
+                
+                string tmpQuantum = comboBox3.SelectedItem?.ToString();
                 int quantum = int.Parse(tmpQuantum);
                 RR scheduler = new RR();
                 var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB, quantum );
