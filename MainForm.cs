@@ -59,7 +59,7 @@ namespace CPUSchedulerProject
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi dữ liệu đầu vào: " + ex.Message);
+                //MessageBox.Show("Lỗi dữ liệu đầu vào: " + ex.Message);
                 return;
             }
             
@@ -114,9 +114,10 @@ namespace CPUSchedulerProject
             }
             else if(algorithm == "RR")
             {
-                string quanturm = AlorithmCombo.SelectedItem?.ToString();
+                string tmpQuantum = AlorithmCombo.SelectedItem?.ToString();
+                int quantum = int.Parse(tmpQuantum);
                 RR scheduler = new RR();
-                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB, 2 );
+                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB, quantum );
 
             }
             else if (algorithm == "SRTF")
@@ -129,6 +130,7 @@ namespace CPUSchedulerProject
         private void MainForm_Load(object sender, EventArgs e)
         {
             AlorithmCombo.SelectedIndex = 0; // Chọn thuật toán đầu tiên
+            comboBox3.SelectedIndex = 0;
         }
     }
 }

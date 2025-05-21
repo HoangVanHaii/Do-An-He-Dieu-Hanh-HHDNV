@@ -6,8 +6,11 @@ namespace CPUSchedulerProject {
             this.JobPool = new System.Windows.Forms.DataGridView();
             this.Arrive = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Burst = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Start = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Finish = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.SpeedTB = new System.Windows.Forms.TrackBar();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.AlorithmCombo = new System.Windows.Forms.ComboBox();
             this.numProcess = new System.Windows.Forms.TextBox();
@@ -22,34 +25,31 @@ namespace CPUSchedulerProject {
             this.label10 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.TurnaroundLabel = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.WaitingLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.CPUlabel = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.CurrentTimeLabel = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.CurrentJobLabel = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.CurrentJobLabel = new System.Windows.Forms.Label();
-            this.CurrentTimeLabel = new System.Windows.Forms.Label();
-            this.CPUlabel = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.TurnaroundLabel = new System.Windows.Forms.Label();
-            this.SpeedTB = new System.Windows.Forms.TrackBar();
-            this.Start = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Finish = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.JobPool)).BeginInit();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedTB)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SpeedTB)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -104,6 +104,20 @@ namespace CPUSchedulerProject {
             this.Burst.Name = "Burst";
             this.Burst.Width = 125;
             // 
+            // Start
+            // 
+            this.Start.HeaderText = "Start";
+            this.Start.MinimumWidth = 6;
+            this.Start.Name = "Start";
+            this.Start.Width = 125;
+            // 
+            // Finish
+            // 
+            this.Finish.HeaderText = "Finish";
+            this.Finish.MinimumWidth = 6;
+            this.Finish.Name = "Finish";
+            this.Finish.Width = 125;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -111,7 +125,7 @@ namespace CPUSchedulerProject {
             this.label6.ForeColor = System.Drawing.Color.Red;
             this.label6.Location = new System.Drawing.Point(18, 23);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(111, 24);
+            this.label6.Size = new System.Drawing.Size(141, 29);
             this.label6.TabIndex = 0;
             this.label6.Text = "JOB POOL";
             this.label6.Click += new System.EventHandler(this.label5_Click);
@@ -137,12 +151,31 @@ namespace CPUSchedulerProject {
             this.panel4.TabIndex = 0;
             this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             // 
+            // SpeedTB
+            // 
+            this.SpeedTB.LargeChange = 200;
+            this.SpeedTB.Location = new System.Drawing.Point(280, 102);
+            this.SpeedTB.Maximum = 1000;
+            this.SpeedTB.Minimum = 100;
+            this.SpeedTB.Name = "SpeedTB";
+            this.SpeedTB.Size = new System.Drawing.Size(135, 56);
+            this.SpeedTB.TabIndex = 4;
+            this.SpeedTB.Value = 550;
+            // 
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"});
             this.comboBox3.Location = new System.Drawing.Point(443, 102);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(87, 21);
+            this.comboBox3.Size = new System.Drawing.Size(87, 24);
             this.comboBox3.TabIndex = 3;
             // 
             // AlorithmCombo
@@ -155,14 +188,14 @@ namespace CPUSchedulerProject {
             "RR"});
             this.AlorithmCombo.Location = new System.Drawing.Point(128, 102);
             this.AlorithmCombo.Name = "AlorithmCombo";
-            this.AlorithmCombo.Size = new System.Drawing.Size(121, 21);
+            this.AlorithmCombo.Size = new System.Drawing.Size(121, 24);
             this.AlorithmCombo.TabIndex = 3;
             // 
             // numProcess
             // 
             this.numProcess.Location = new System.Drawing.Point(20, 104);
             this.numProcess.Name = "numProcess";
-            this.numProcess.Size = new System.Drawing.Size(85, 20);
+            this.numProcess.Size = new System.Drawing.Size(85, 22);
             this.numProcess.TabIndex = 2;
             this.numProcess.TextChanged += new System.EventHandler(this.numProcess_TextChanged);
             // 
@@ -191,7 +224,7 @@ namespace CPUSchedulerProject {
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(452, 70);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 16);
+            this.label5.Size = new System.Drawing.Size(84, 20);
             this.label5.TabIndex = 0;
             this.label5.Text = "Quantum";
             this.label5.Click += new System.EventHandler(this.label5_Click);
@@ -202,7 +235,7 @@ namespace CPUSchedulerProject {
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(320, 70);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 16);
+            this.label4.Size = new System.Drawing.Size(61, 20);
             this.label4.TabIndex = 0;
             this.label4.Text = "Speed";
             // 
@@ -212,7 +245,7 @@ namespace CPUSchedulerProject {
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(154, 70);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 16);
+            this.label3.Size = new System.Drawing.Size(89, 20);
             this.label3.TabIndex = 0;
             this.label3.Text = "Algorithm";
             // 
@@ -222,7 +255,7 @@ namespace CPUSchedulerProject {
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(23, 70);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(93, 16);
+            this.label2.Size = new System.Drawing.Size(115, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "Num of Jobs";
             // 
@@ -233,7 +266,7 @@ namespace CPUSchedulerProject {
             this.label1.ForeColor = System.Drawing.Color.Red;
             this.label1.Location = new System.Drawing.Point(21, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 25);
+            this.label1.Size = new System.Drawing.Size(91, 31);
             this.label1.TabIndex = 0;
             this.label1.Text = "DATA";
             // 
@@ -254,7 +287,7 @@ namespace CPUSchedulerProject {
             this.label10.ForeColor = System.Drawing.Color.Red;
             this.label10.Location = new System.Drawing.Point(35, 11);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(156, 24);
+            this.label10.Size = new System.Drawing.Size(195, 29);
             this.label10.TabIndex = 0;
             this.label10.Text = "GANTT CHART";
             this.label10.Click += new System.EventHandler(this.label5_Click);
@@ -285,13 +318,35 @@ namespace CPUSchedulerProject {
             this.panel8.TabIndex = 1;
             this.panel8.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
+            // TurnaroundLabel
+            // 
+            this.TurnaroundLabel.AutoSize = true;
+            this.TurnaroundLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TurnaroundLabel.Location = new System.Drawing.Point(201, 105);
+            this.TurnaroundLabel.Name = "TurnaroundLabel";
+            this.TurnaroundLabel.Size = new System.Drawing.Size(70, 25);
+            this.TurnaroundLabel.TabIndex = 0;
+            this.TurnaroundLabel.Text = "label1";
+            this.TurnaroundLabel.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(190, 69);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(104, 20);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Turnaround";
+            this.label14.Click += new System.EventHandler(this.label5_Click);
+            // 
             // label15
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.Location = new System.Drawing.Point(28, 69);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(59, 16);
+            this.label15.Size = new System.Drawing.Size(72, 20);
             this.label15.TabIndex = 0;
             this.label15.Text = "Waiting";
             this.label15.Click += new System.EventHandler(this.label5_Click);
@@ -302,7 +357,7 @@ namespace CPUSchedulerProject {
             this.WaitingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WaitingLabel.Location = new System.Drawing.Point(42, 105);
             this.WaitingLabel.Name = "WaitingLabel";
-            this.WaitingLabel.Size = new System.Drawing.Size(19, 20);
+            this.WaitingLabel.Size = new System.Drawing.Size(24, 25);
             this.WaitingLabel.TabIndex = 0;
             this.WaitingLabel.Text = "0";
             this.WaitingLabel.Click += new System.EventHandler(this.label5_Click);
@@ -314,7 +369,7 @@ namespace CPUSchedulerProject {
             this.label9.ForeColor = System.Drawing.Color.Red;
             this.label9.Location = new System.Drawing.Point(28, 25);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(109, 24);
+            this.label9.Size = new System.Drawing.Size(132, 29);
             this.label9.TabIndex = 0;
             this.label9.Text = "AVERAGE";
             this.label9.Click += new System.EventHandler(this.label5_Click);
@@ -337,7 +392,7 @@ namespace CPUSchedulerProject {
             this.label8.ForeColor = System.Drawing.Color.Red;
             this.label8.Location = new System.Drawing.Point(29, 25);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(157, 24);
+            this.label8.Size = new System.Drawing.Size(196, 29);
             this.label8.TabIndex = 0;
             this.label8.Text = "READY QUEUE";
             this.label8.Click += new System.EventHandler(this.label5_Click);
@@ -359,16 +414,38 @@ namespace CPUSchedulerProject {
             this.panel6.TabIndex = 1;
             this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
+            // CPUlabel
+            // 
+            this.CPUlabel.AutoSize = true;
+            this.CPUlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CPUlabel.Location = new System.Drawing.Point(272, 105);
+            this.CPUlabel.Name = "CPUlabel";
+            this.CPUlabel.Size = new System.Drawing.Size(43, 25);
+            this.CPUlabel.TabIndex = 0;
+            this.CPUlabel.Text = "0%";
+            this.CPUlabel.Click += new System.EventHandler(this.label5_Click);
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(253, 69);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(75, 16);
+            this.label13.Size = new System.Drawing.Size(94, 20);
             this.label13.TabIndex = 0;
             this.label13.Text = "Utilization";
             this.label13.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // CurrentTimeLabel
+            // 
+            this.CurrentTimeLabel.AutoSize = true;
+            this.CurrentTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CurrentTimeLabel.Location = new System.Drawing.Point(151, 106);
+            this.CurrentTimeLabel.Name = "CurrentTimeLabel";
+            this.CurrentTimeLabel.Size = new System.Drawing.Size(24, 25);
+            this.CurrentTimeLabel.TabIndex = 0;
+            this.CurrentTimeLabel.Text = "0";
+            this.CurrentTimeLabel.Click += new System.EventHandler(this.label5_Click);
             // 
             // label12
             // 
@@ -376,10 +453,21 @@ namespace CPUSchedulerProject {
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(132, 69);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(95, 16);
+            this.label12.Size = new System.Drawing.Size(119, 20);
             this.label12.TabIndex = 0;
             this.label12.Text = "Current Time";
             this.label12.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // CurrentJobLabel
+            // 
+            this.CurrentJobLabel.AutoSize = true;
+            this.CurrentJobLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CurrentJobLabel.Location = new System.Drawing.Point(35, 106);
+            this.CurrentJobLabel.Name = "CurrentJobLabel";
+            this.CurrentJobLabel.Size = new System.Drawing.Size(47, 25);
+            this.CurrentJobLabel.TabIndex = 0;
+            this.CurrentJobLabel.Text = "Idle";
+            this.CurrentJobLabel.Click += new System.EventHandler(this.label5_Click);
             // 
             // label11
             // 
@@ -387,7 +475,7 @@ namespace CPUSchedulerProject {
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.Location = new System.Drawing.Point(24, 69);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(86, 16);
+            this.label11.Size = new System.Drawing.Size(108, 20);
             this.label11.TabIndex = 0;
             this.label11.Text = "Current Job";
             this.label11.Click += new System.EventHandler(this.label5_Click);
@@ -399,86 +487,10 @@ namespace CPUSchedulerProject {
             this.label7.ForeColor = System.Drawing.Color.Red;
             this.label7.Location = new System.Drawing.Point(18, 21);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(51, 24);
+            this.label7.Size = new System.Drawing.Size(66, 29);
             this.label7.TabIndex = 0;
             this.label7.Text = "CPU";
             this.label7.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // CurrentJobLabel
-            // 
-            this.CurrentJobLabel.AutoSize = true;
-            this.CurrentJobLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CurrentJobLabel.Location = new System.Drawing.Point(35, 106);
-            this.CurrentJobLabel.Name = "CurrentJobLabel";
-            this.CurrentJobLabel.Size = new System.Drawing.Size(39, 20);
-            this.CurrentJobLabel.TabIndex = 0;
-            this.CurrentJobLabel.Text = "Idle";
-            this.CurrentJobLabel.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // CurrentTimeLabel
-            // 
-            this.CurrentTimeLabel.AutoSize = true;
-            this.CurrentTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CurrentTimeLabel.Location = new System.Drawing.Point(151, 106);
-            this.CurrentTimeLabel.Name = "CurrentTimeLabel";
-            this.CurrentTimeLabel.Size = new System.Drawing.Size(19, 20);
-            this.CurrentTimeLabel.TabIndex = 0;
-            this.CurrentTimeLabel.Text = "0";
-            this.CurrentTimeLabel.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // CPUlabel
-            // 
-            this.CPUlabel.AutoSize = true;
-            this.CPUlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CPUlabel.Location = new System.Drawing.Point(272, 105);
-            this.CPUlabel.Name = "CPUlabel";
-            this.CPUlabel.Size = new System.Drawing.Size(34, 20);
-            this.CPUlabel.TabIndex = 0;
-            this.CPUlabel.Text = "0%";
-            this.CPUlabel.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(190, 69);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(86, 16);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Turnaround";
-            this.label14.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // TurnaroundLabel
-            // 
-            this.TurnaroundLabel.AutoSize = true;
-            this.TurnaroundLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TurnaroundLabel.Location = new System.Drawing.Point(201, 105);
-            this.TurnaroundLabel.Name = "TurnaroundLabel";
-            this.TurnaroundLabel.Size = new System.Drawing.Size(57, 20);
-            this.TurnaroundLabel.TabIndex = 0;
-            this.TurnaroundLabel.Text = "label1";
-            this.TurnaroundLabel.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // SpeedTB
-            // 
-            this.SpeedTB.LargeChange = 200;
-            this.SpeedTB.Location = new System.Drawing.Point(280, 102);
-            this.SpeedTB.Maximum = 1000;
-            this.SpeedTB.Minimum = 100;
-            this.SpeedTB.Name = "SpeedTB";
-            this.SpeedTB.Size = new System.Drawing.Size(135, 45);
-            this.SpeedTB.TabIndex = 4;
-            this.SpeedTB.Value = 550;
-            // 
-            // Start
-            // 
-            this.Start.HeaderText = "Start";
-            this.Start.Name = "Start";
-            // 
-            // Finish
-            // 
-            this.Finish.HeaderText = "Finish";
-            this.Finish.Name = "Finish";
             // 
             // MainForm
             // 
@@ -495,6 +507,7 @@ namespace CPUSchedulerProject {
             ((System.ComponentModel.ISupportInitialize)(this.JobPool)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedTB)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -504,7 +517,6 @@ namespace CPUSchedulerProject {
             this.panel7.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SpeedTB)).EndInit();
             this.ResumeLayout(false);
 
         }
