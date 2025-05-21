@@ -21,12 +21,7 @@ namespace Algorithms
             int y = panel2.Height / 4;
             int spacing = 1;
                     // Chọn màu theo ID (tuỳ chỉnh)
-            Color color = Color.Red;
-            if (process.ID == 2) color = Color.Brown;
-            if (process.ID == 3) color = Color.Orange;
-            if (process.ID == 4) color = Color.BlueViolet;
-            if (process.ID == 5) color = Color.Green;
-            if(process.ID == 1000) color = Color.DarkGray;
+            Color color = GetColorByProcessID(process.ID);  
 
             // Vẽ ID tiến trình
             Brush brush = new SolidBrush(color);

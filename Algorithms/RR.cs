@@ -22,12 +22,7 @@ namespace CPUSchedulerProject.Algorithms
             int y = panel2.Height / 4;
             int spacing = 1;
             // Chọn màu theo ID (tuỳ chỉnh)
-            Color color = Color.Red;
-            if (process.ID == 2) color = Color.Brown;
-            if (process.ID == 3) color = Color.Orange;
-            if (process.ID == 4) color = Color.BlueViolet;
-            if (process.ID == 5) color = Color.Green;
-            if (process.ID == 1000) color = Color.DarkGray;
+            Color color = GetColorByProcessID(process.ID);
 
             // Vẽ ID tiến trình
             Brush brush = new SolidBrush(color);
@@ -137,11 +132,8 @@ namespace CPUSchedulerProject.Algorithms
 
                 // Vẽ hàng đợi readyQueue ra panel7
                 panel7.Invalidate(); // xóa panel cũ
-                foreach (var p in readyQueue)
-                {
-                    DrawReadyList(panel7, p, p.BurstTime.ToString());
-                    await Task.Delay(1100 - SpeedTB.Value);
-                }
+                await Task.Delay(50); // delay để nhìn rõ hơn
+                
                 if (readyQueue.Count == 0)
                 {
                     xReady = 50;
@@ -155,7 +147,12 @@ namespace CPUSchedulerProject.Algorithms
                 }
 
                 var currentProcess = readyQueue.Dequeue();
-
+                xReady = 50;
+                foreach (var p in readyQueue)
+                {
+                    DrawReadyList(panel7, p, p.BurstTime.ToString());
+                }
+                await Task.Delay(50); // delay để nhìn rõ hơn
                 int executeTime = Math.Min(quantum, remainingBurst[currentProcess.ID]);
 
                 // Nếu lần đầu chạy thì set StartTime
@@ -196,8 +193,9 @@ namespace CPUSchedulerProject.Algorithms
                     // Cập nhật ready queue thêm những tiến trình mới đến (ngoại trừ tiến trình hiện tại)
                     foreach (var proc in sorted)
                     {
-                        if (proc.ArrivalTime <= currentTime && !proc.IsCompleted && !readyQueue.Contains(proc) && proc.ID != currentProcess.ID)
+                        if (proc.ArrivalTime <= currentTime && !proc.IsCompleted && !readyQueue.Contains(proc) && proc.ID != currentProcess.ID) { 
                             readyQueue.Enqueue(proc);
+                        }
                     }
                     // Đưa tiến trình chưa hoàn thành về cuối queue
                     readyQueue.Enqueue(currentProcess);
