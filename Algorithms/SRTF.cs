@@ -142,7 +142,8 @@ namespace Algorithms
                     {
                         if (process.ArrivalTime <= currentTime &&
                             !process.IsCompleted &&
-                            process != currentProcess)
+                            process != currentProcess
+                            )
                         {
                             await Task.Delay(20);
                             DrawReadyList(panel7, process, process.RemainingTime.ToString());
@@ -193,14 +194,16 @@ namespace Algorithms
                 {
                     // Không có tiến trình sẵn sàng => vẽ CPU trống
                     await Task.Delay(20);
-                    Process idle = new Process { ID = 1000 };
+                    Process idle = new Process ();
+                    idle.ID= 1000;
                     DrawGanttChart(panel2, idle, 3, true);
                     await Task.Delay(1100 - SpeedTB.Value);
                     currentTime++;
                     CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
                 }
-
-                panel7.Invalidate();
+                if(currentProcess != null &&currentProcess.RemainingTime == 0) { 
+                    panel7.Invalidate();
+                }
                 xReady = 50;
             }
 
