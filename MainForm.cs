@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Data;
 using System.Drawing;
 using System.Threading.Tasks;
+using CPUSchedulerProject.Algorithms;
 
 namespace CPUSchedulerProject
 {
@@ -110,6 +111,13 @@ namespace CPUSchedulerProject
                 //resultList = tmp;
                 //await  DrawQueueAsync();
                 //await DrawGanttChart();
+            }
+            else if(algorithm == "RR")
+            {
+                string quanturm = AlorithmCombo.SelectedItem?.ToString();
+                RR scheduler = new RR();
+                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB, 2 );
+
             }
         }
 
