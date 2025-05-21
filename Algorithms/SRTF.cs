@@ -8,5 +8,6 @@ namespace CPUSchedulerProject.Algorithms
 {
     internal class SRTF
     {
+
     }
 }

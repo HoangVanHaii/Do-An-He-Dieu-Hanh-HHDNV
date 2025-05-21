@@ -106,7 +106,11 @@ namespace Algorithms
                 }
                 for (int j = k ; j < sorted.Count; j++)
                 {
-                   DrawReadyList(panel7, sorted[j], sorted[j].BurstTime.ToString());
+                    if(currentTime >= sorted[j].ArrivalTime)
+                    {
+                        DrawReadyList(panel7, sorted[j], sorted[j].BurstTime.ToString());
+                    }
+                    
                 }
                 if (currentTime < process.ArrivalTime)
                 {
@@ -121,8 +125,10 @@ namespace Algorithms
                             space = 3;
                         }
                         DrawGanttChart(panel2, EmptyCpu, space, isEmptyCpu);
-                        await Task.Delay(1000); // mô phỏng 1s thực tế
+                        //await Task.Delay(500); // mô phỏng 1s thực tế
                         currentTime++;
+                        
+                        //await Task.Delay(500);
                     }
                     i -= 1;
                     xReady = 50;
@@ -130,8 +136,6 @@ namespace Algorithms
                     continue;
                 }
                
-                    //currentTime = process.ArrivalTime;
-
                 process.StartTime = currentTime;
                 process.WaitTime = currentTime - process.ArrivalTime;
 
@@ -144,9 +148,20 @@ namespace Algorithms
                         space = 3;
                     }
                     DrawGanttChart(panel2, process, space);
-                    await Task.Delay(1000); // mô phỏng 1s thực tế
+                    await Task.Delay(500); // mô phỏng 1s thực tế
 
                     currentTime++;
+                    for (int t = i + 1; t < sorted.Count; t++)
+                    {
+                        if (currentTime == sorted[t].ArrivalTime)
+                        {
+
+                            DrawReadyList(panel7, sorted[t], sorted[t].BurstTime.ToString());
+                            await Task.Delay(300);
+                        }
+
+                    }
+                   
                 }
                 if(!(i < sorted.Count - 1 && currentTime < sorted[i + 1].ArrivalTime))
                 {
