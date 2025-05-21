@@ -49,6 +49,11 @@ namespace CPUSchedulerProject
                     JobPool.Rows[i].Cells[3].Value = 0;
                     JobPool.Rows[i].HeaderCell.Value = "P" + (i + 1).ToString();
                 }
+                JobPool.Columns[0].ReadOnly = false;
+                JobPool.Columns[1].ReadOnly = false;
+                JobPool.Columns[2].ReadOnly = true;
+                JobPool.Columns[3].ReadOnly = true;
+
                 JobPool.Invalidate();
             }
             catch (Exception ex)
