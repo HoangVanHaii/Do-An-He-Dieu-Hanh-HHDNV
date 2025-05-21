@@ -125,6 +125,23 @@ namespace CPUSchedulerProject
                 SRTF scheduler = new SRTF();
                 var (tmp, avgWait, avgTurnaround) = await scheduler.RunSRTFAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB);
             }
+            else if (algorithm == "SJF")
+            {
+                SJF scheduler = new SJF();
+                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(
+                    processList,
+                    panel2,
+                    panel7,
+                    CurrentJobLabel,
+                    CurrentTimeLabel,
+                    CPUlabel,
+                    WaitingLabel,
+                    TurnaroundLabel,
+                    JobPool,
+                    SpeedTB
+                );
+            }
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
