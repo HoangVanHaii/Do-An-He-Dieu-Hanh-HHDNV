@@ -56,6 +56,7 @@ namespace CPUSchedulerProject
             string algorithm = AlorithmCombo.SelectedItem?.ToString();
             processList.Clear();
             resultList.Clear();
+            panel2.Invalidate();
 
             try
             {

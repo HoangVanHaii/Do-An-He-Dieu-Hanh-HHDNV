@@ -23,9 +23,10 @@ namespace Algorithms
                     // Chọn màu theo ID (tuỳ chỉnh)
             Color color = Color.Red;
             if (process.ID == 2) color = Color.DarkGray;
-            if (process.ID == 3) color = Color.Pink;
+            if (process.ID == 3) color = Color.Orange;
             if (process.ID == 4) color = Color.BlueViolet;
             if (process.ID == 5) color = Color.Green;
+            if(process.ID == 1000) color = Color.White;
 
             // Vẽ ID tiến trình
             Brush brush = new SolidBrush(color);
@@ -45,7 +46,7 @@ namespace Algorithms
             // Chọn màu theo ID (tuỳ chỉnh)
             Color color = Color.Red;
             if (process.ID == 2) color = Color.DarkGray;
-            if (process.ID == 3) color = Color.Pink;
+            if (process.ID == 3) color = Color.Orange;
             if (process.ID == 4) color = Color.BlueViolet;
             if (process.ID == 5) color = Color.Green;
 
@@ -83,13 +84,32 @@ namespace Algorithms
             {
                 var process = sorted[i];
                 await Task.Delay(100);
-
-                for (int j = i + 1; j < sorted.Count; j++)
+                int k = i;
+                if(currentTime >= process.ArrivalTime)
+                {
+                    k += 1;
+                }
+                for (int j = k ; j < sorted.Count; j++)
                 {
                    DrawReadyList(panel7, sorted[j], sorted[j].BurstTime.ToString());
                 }
                 if (currentTime < process.ArrivalTime)
-                    currentTime = process.ArrivalTime;
+                {
+                    for (int j = currentTime; j < process.ArrivalTime; j++)
+                    {
+                        Process EmptyCpu = new Process();
+                        EmptyCpu.ID = 1000;
+                        DrawGanttChart(panel2, EmptyCpu);
+                        await Task.Delay(1000); // mô phỏng 1s thực tế
+                        currentTime++;
+                    }
+                    i -= 1;
+                    xReady = 50;
+                    panel7.Invalidate();
+                    continue;
+                }
+               
+                    //currentTime = process.ArrivalTime;
 
                 process.StartTime = currentTime;
                 process.WaitTime = currentTime - process.ArrivalTime;
@@ -102,8 +122,10 @@ namespace Algorithms
 
                     currentTime++;
                 }
-                panel7.Invalidate();
-                //x = 50;
+                if(!(i < sorted.Count - 1 && currentTime < sorted[i + 1].ArrivalTime))
+                {
+                    panel7.Invalidate();
+                }
                 xReady = 50;
                 //MessageBox.Show($"chạy xong tiến trình ${process.ID}");
                 process.FinishTime = currentTime;
