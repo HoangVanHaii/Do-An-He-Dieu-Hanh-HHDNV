@@ -32,24 +32,19 @@ namespace Algorithms
             Brush brush = new SolidBrush(color);
             Rectangle rect = new Rectangle(xGant, y, unitWidth, height);
             g.FillRectangle(brush, rect);
-            g.DrawString("1" , panel2.Font, Brushes.Black, xGant + 2, y + 30);
+            if(!isEmptyCpu) g.DrawString(process.ID.ToString(), panel2.Font, Brushes.Black, xGant + 2, y + 30);
 
             if (isEmptyCpu)
             {
                 Pen pen = new Pen(Color.Black, 1);
-
-                // Đường ngang ở 1/4 chiều cao
                 int y1 = rect.Top + rect.Height / 4;
                 g.DrawLine(pen, rect.Left, y1, rect.Right, y1);
-
-                // Đường ngang ở 3/4 chiều cao
+                int y3 = rect.Top + (rect.Height) / 2;
+                g.DrawLine(pen, rect.Left, y3, rect.Right, y3);
                 int y2 = rect.Top + (rect.Height * 3) / 4;
                 g.DrawLine(pen, rect.Left, y2, rect.Right, y2);
-
             }
-
             xGant += unitWidth + spacing + space ;
-            
         }
         private void DrawReadyList(Panel panel7, Process process, string text)
         {
@@ -134,15 +129,14 @@ namespace Algorithms
                             space = 3;
                         }
                         DrawGanttChart(panel2, EmptyCpu, space, isEmptyCpu);
-                        currentTime++;
-                        
+                        await Task.Delay(1100 - SpeedTB.Value); // mô phỏng 1s thực tế
+                        currentTime++;                        
                     }
                     i -= 1;
                     xReady = 50;
                     panel7.Invalidate();
                     continue;
                 }
-               
                 process.StartTime = currentTime;
                 Jobpool.Rows[i].Cells[2].Value = process.StartTime;
                 process.WaitTime = currentTime - process.ArrivalTime;
@@ -169,7 +163,6 @@ namespace Algorithms
                     {
                         if (currentTime == sorted[t].ArrivalTime)
                         {
-
                             DrawReadyList(panel7, sorted[t], sorted[t].BurstTime.ToString());
                             await Task.Delay(1100 - SpeedTB.Value);
                         }
