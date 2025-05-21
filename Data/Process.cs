@@ -12,5 +12,6 @@
         public int FinishTime { get; set; }
         public int WaitTime { get; set; }
         public int TurnaroundTime { get; set; }
+        public int RemainingTime { get; set; }
     }
 }
