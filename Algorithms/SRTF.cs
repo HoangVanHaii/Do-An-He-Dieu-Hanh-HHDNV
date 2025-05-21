@@ -102,20 +102,114 @@ namespace Algorithms
 
         }
 
-        public async Task<(List<Process> Processes, double AvgWaitTime, double AvgTurnaroundTime)> RunAsync(
-             List<Process> processes,
-             Panel panel2,
-             Panel panel7,
-             Label CurrentJob,
-             Label CurrentTimelabel,
-             Label CPUlabel,
-             Label WaitingLabel,
-             Label TurnaroundLabel,
-             DataGridView Jobpool,
-             TrackBar SpeedTB)
+        public async Task<(List<Process> Processes, double AvgWaitTime, double AvgTurnaroundTime)> RunSRTFAsync(
+            List<Process> processes,
+            Panel panel2,
+            Panel panel7,
+            Label CurrentJob,
+            Label CurrentTimelabel,
+            Label CPUlabel,
+            Label WaitingLabel,
+            Label TurnaroundLabel,
+            DataGridView Jobpool,
+            TrackBar SpeedTB)
         {
-            //return ;
+            double total = 0;
+            double waiting = 0;
+            double turnaround = 0;
+            int currentTime = 0;
+            int completed = 0;
+            int n = processes.Count;
+            var processList = processes.OrderBy(p => p.ArrivalTime).ThenBy(p => p.ID).ToList();
+
+            foreach (var p in processList)
+            {
+                p.RemainingTime = p.BurstTime;
+                p.IsCompleted = false;
+            }
+
+            Process currentProcess = null;
+            int lastProcessID = -1;
+
+            while (completed < n)
+            {
+                var availableProcesses = processList
+                    .Where(p => p.ArrivalTime <= currentTime && !p.IsCompleted)
+                    .OrderBy(p => p.RemainingTime)
+                    .ThenBy(p => p.ArrivalTime)
+                    .ThenBy(p => p.ID)
+                    .ToList();
+
+                if (availableProcesses.Any())
+                {
+                    currentProcess = availableProcesses.First();
+
+                    if (currentProcess.ID != lastProcessID)
+                    {
+                        await Task.Delay(20);
+                        DrawReadyList(panel7, currentProcess, currentProcess.RemainingTime.ToString());
+                        lastProcessID = currentProcess.ID;
+                    }
+
+                    if (currentProcess.StartTime == -1)
+                    {
+                        currentProcess.StartTime = currentTime;
+                        Jobpool.Rows[processList.IndexOf(currentProcess)].Cells[2].Value = currentTime;
+                    }
+
+                    DrawGanttChart(panel2, currentProcess, currentProcess.RemainingTime == 1 ? 3 : 0);
+                    CurrentJob.Text = $"JOB {currentProcess.ID}";
+
+                    await Task.Delay(1100 - SpeedTB.Value);
+                    currentTime++;
+                    CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
+
+                    currentProcess.RemainingTime--;
+
+                    if (currentProcess.RemainingTime == 0)
+                    {
+                        currentProcess.IsCompleted = true;
+                        currentProcess.FinishTime = currentTime;
+                        currentProcess.TurnaroundTime = currentProcess.FinishTime - currentProcess.ArrivalTime;
+                        currentProcess.WaitTime = currentProcess.TurnaroundTime - currentProcess.BurstTime;
+                        total += currentProcess.BurstTime;
+
+                        Jobpool.Rows[processList.IndexOf(currentProcess)].Cells[3].Value = currentProcess.FinishTime;
+
+                        waiting += currentProcess.WaitTime;
+                        turnaround += currentProcess.TurnaroundTime;
+
+                        double tmpWait = waiting / n;
+                        double tmpTurn = turnaround / n;
+                        WaitingLabel.Text = $"{tmpWait:F3}";
+                        TurnaroundLabel.Text = $"{tmpTurn:F3}";
+
+                        completed++;
+                    }
+
+                    double CPU = (total / (double)currentTime) * 100;
+                    CPUlabel.Text = $"{CPU:F2}%";
+                }
+                else
+                {
+                    // Không có tiến trình sẵn sàng => vẽ CPU trống
+                    await Task.Delay(20);
+                    Process idle = new Process { ID = 1000 };
+                    DrawGanttChart(panel2, idle, 3, true);
+                    await Task.Delay(1100 - SpeedTB.Value);
+                    currentTime++;
+                    CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
+                }
+
+                panel7.Invalidate();
+                //xReady = 50;
+            }
+
+            double avgWaitTime = processList.Average(p => p.WaitTime);
+            double avgTurnaroundTime = processList.Average(p => p.TurnaroundTime);
+            return (processList, avgWaitTime, avgTurnaroundTime);
         }
+
 
     }
 }
