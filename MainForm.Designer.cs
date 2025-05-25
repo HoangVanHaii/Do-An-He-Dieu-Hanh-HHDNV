@@ -97,7 +97,6 @@ namespace CPUSchedulerProject {
             this.label10.Size = new System.Drawing.Size(188, 25);
             this.label10.TabIndex = 0;
             this.label10.Text = "GANTT CHART";
-            this.label10.Click += new System.EventHandler(this.label5_Click);
             // 
             // panel7
             // 
@@ -133,7 +132,6 @@ namespace CPUSchedulerProject {
             this.label8.Size = new System.Drawing.Size(207, 27);
             this.label8.TabIndex = 0;
             this.label8.Text = "READY QUEUE";
-            this.label8.Click += new System.EventHandler(this.label5_Click);
             // 
             // panel6
             // 
@@ -152,7 +150,6 @@ namespace CPUSchedulerProject {
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(300, 140);
             this.panel6.TabIndex = 1;
-            this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
             // pictureBox3
             // 
@@ -177,7 +174,6 @@ namespace CPUSchedulerProject {
             this.CPUlabel.TabIndex = 0;
             this.CPUlabel.Text = "0%";
             this.CPUlabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.CPUlabel.Click += new System.EventHandler(this.label5_Click);
             // 
             // label13
             // 
@@ -190,7 +186,6 @@ namespace CPUSchedulerProject {
             this.label13.Size = new System.Drawing.Size(75, 16);
             this.label13.TabIndex = 0;
             this.label13.Text = "Utilization";
-            this.label13.Click += new System.EventHandler(this.label5_Click);
             // 
             // CurrentTimeLabel
             // 
@@ -204,7 +199,6 @@ namespace CPUSchedulerProject {
             this.CurrentTimeLabel.TabIndex = 0;
             this.CurrentTimeLabel.Text = "0";
             this.CurrentTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.CurrentTimeLabel.Click += new System.EventHandler(this.label5_Click);
             // 
             // label12
             // 
@@ -230,7 +224,6 @@ namespace CPUSchedulerProject {
             this.CurrentJobLabel.TabIndex = 0;
             this.CurrentJobLabel.Text = "Job 0";
             this.CurrentJobLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.CurrentJobLabel.Click += new System.EventHandler(this.label5_Click);
             // 
             // label11
             // 
@@ -243,7 +236,6 @@ namespace CPUSchedulerProject {
             this.label11.Size = new System.Drawing.Size(86, 16);
             this.label11.TabIndex = 0;
             this.label11.Text = "Current Job";
-            this.label11.Click += new System.EventHandler(this.label5_Click);
             // 
             // label7
             // 
@@ -256,7 +248,6 @@ namespace CPUSchedulerProject {
             this.label7.Size = new System.Drawing.Size(67, 27);
             this.label7.TabIndex = 0;
             this.label7.Text = "CPU";
-            this.label7.Click += new System.EventHandler(this.label5_Click);
             // 
             // panel4
             // 
@@ -308,13 +299,10 @@ namespace CPUSchedulerProject {
             this.comboBox3.ForeColor = System.Drawing.Color.SteelBlue;
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
+            "0",
             "4",
-            "5",
-            "6",
-            "7"});
+            "8",
+            "12"});
             this.comboBox3.Location = new System.Drawing.Point(115, 189);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(165, 21);
@@ -528,7 +516,6 @@ namespace CPUSchedulerProject {
             this.label6.Size = new System.Drawing.Size(148, 27);
             this.label6.TabIndex = 0;
             this.label6.Text = "JOB POOL";
-            this.label6.Click += new System.EventHandler(this.label5_Click);
             // 
             // panel8
             // 
@@ -545,7 +532,6 @@ namespace CPUSchedulerProject {
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(245, 140);
             this.panel8.TabIndex = 1;
-            this.panel8.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
             // pictureBox5
             // 
@@ -569,7 +555,6 @@ namespace CPUSchedulerProject {
             this.TurnaroundLabel.Size = new System.Drawing.Size(23, 24);
             this.TurnaroundLabel.TabIndex = 0;
             this.TurnaroundLabel.Text = "0";
-            this.TurnaroundLabel.Click += new System.EventHandler(this.label5_Click);
             // 
             // label14
             // 
@@ -582,7 +567,6 @@ namespace CPUSchedulerProject {
             this.label14.Size = new System.Drawing.Size(86, 16);
             this.label14.TabIndex = 0;
             this.label14.Text = "Turnaround";
-            this.label14.Click += new System.EventHandler(this.label5_Click);
             // 
             // label15
             // 
@@ -595,7 +579,6 @@ namespace CPUSchedulerProject {
             this.label15.Size = new System.Drawing.Size(59, 16);
             this.label15.TabIndex = 0;
             this.label15.Text = "Waiting";
-            this.label15.Click += new System.EventHandler(this.label5_Click);
             // 
             // WaitingLabel
             // 
@@ -608,7 +591,6 @@ namespace CPUSchedulerProject {
             this.WaitingLabel.Size = new System.Drawing.Size(23, 24);
             this.WaitingLabel.TabIndex = 0;
             this.WaitingLabel.Text = "0";
-            this.WaitingLabel.Click += new System.EventHandler(this.label5_Click);
             // 
             // label9
             // 
@@ -621,7 +603,6 @@ namespace CPUSchedulerProject {
             this.label9.Size = new System.Drawing.Size(142, 27);
             this.label9.TabIndex = 0;
             this.label9.Text = "AVERAGE";
-            this.label9.Click += new System.EventHandler(this.label5_Click);
             // 
             // MainForm
             // 

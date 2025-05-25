@@ -14,16 +14,10 @@ namespace CPUSchedulerProject
         public MainForm()
         {
             InitializeComponent();
-
         }
-
-        // Biến toàn cục
         List<Process> processList = new List<Process>();
-        List<Process> resultList = new List<Process>();
         double avgWaitTime = 0;
         double avgTurnaroundTime = 0;
-
-        private void label5_Click(object sender, EventArgs e) { }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -33,15 +27,11 @@ namespace CPUSchedulerProject
                 int rows = int.Parse(numProcess.Text);
                 //MessageBox.Show(rows.ToString());
             }
-            catch
+            catch(Exception ex)
             {
                 return;
             }
-            
         }
-
-        private void panel6_Paint(object sender, PaintEventArgs e) { }
-
         private void numProcess_TextChanged(object sender, EventArgs e)
         {
             string inp = numProcess.Text;
@@ -49,6 +39,13 @@ namespace CPUSchedulerProject
             {
                 JobPool.Rows.Clear();
                 int row = int.Parse(inp);
+                if(row <= 0)
+                {
+                    System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
+                    toolTip.Show("Số lượng tiến trình không hợp lệ!!", this, 450, 140, 1500);
+                    button1.Enabled = false;
+                    return;
+                }
                 for (int i = 0; i < row; i++)
                 {
                     JobPool.Rows.Add();
@@ -56,31 +53,31 @@ namespace CPUSchedulerProject
                     JobPool.Rows[i].Cells[3].Value = 0;
                     JobPool.Rows[i].HeaderCell.Value = "P" + (i + 1).ToString();
                 }
-                JobPool.Columns[0].ReadOnly = false;
-                JobPool.Columns[1].ReadOnly = false;
                 JobPool.Columns[2].ReadOnly = true;
                 JobPool.Columns[3].ReadOnly = true;
 
                 JobPool.Invalidate();
+                button1.Enabled = true;
             }
             catch (Exception ex)
             {
                 System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
-                // Hiển thị ToolTip
                 toolTip.Show("Số lượng tiến trình không hợp lệ!!", this, 450, 140, 1500);
-                //MessageBox.Show("Lỗi dữ liệu đầu vào: " + ex.Message);
+                button1.Enabled = false;
                 return;
             }
-            
         }
-
         private async void button1_Click(object sender, EventArgs e)
         {
             string algorithm = AlorithmCombo.SelectedItem?.ToString();
             processList.Clear();
-            resultList.Clear();
+            button1.Enabled = false;
+            numProcess.Enabled = false;
+            AlorithmCombo.Enabled = false;
+            comboBox3.Enabled = false;
+            JobPool.Columns[0].ReadOnly = true;
+            JobPool.Columns[1].ReadOnly = true;
             panel2.Invalidate();
-
             try
             {
                 int rowCount = int.Parse(numProcess.Text);
@@ -101,34 +98,29 @@ namespace CPUSchedulerProject
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi dữ liệu đầu vào: " + ex.Message);
+                MessageBox.Show("Lỗi dữ liệu đầu vào");
                 return;
             }
-
             if (algorithm == "FCFS")
             {
                 FCFS scheduler = new FCFS();
                 var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel,TurnaroundLabel, JobPool, SpeedTB);
-
-                //string result = "";
-                //foreach (var p in resultList)
-                //{
-                //    result += $"ID: {p.ID}, Arrival: {p.ArrivalTime}, Burst: {p.BurstTime}, " +
-                //              $"Start: {p.StartTime}, Finish: {p.FinishTime}, " +
-                //              $"Wait: {p.WaitTime}, Turnaround: {p.TurnaroundTime}\n";
-                //}
-                //resultList = tmp;
-                //await  DrawQueueAsync();
-                //await DrawGanttChart();
             }
             else if(algorithm == "RR")
             {
-                
-                string tmpQuantum = comboBox3.SelectedItem?.ToString();
-                int quantum = int.Parse(tmpQuantum);
-                RR scheduler = new RR();
-                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB, quantum );
-
+                string tmpQuantum = comboBox3.Text;
+                try
+                {
+                    int quantum = int.Parse(tmpQuantum);
+                    RR scheduler = new RR();
+                    var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB, quantum);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Giá trị Quantum không hợp lệ");
+                    return;
+                }
+               
             }
             else if (algorithm == "SRTF")
             {
@@ -151,13 +143,18 @@ namespace CPUSchedulerProject
                     SpeedTB
                 );
             }
-
+            button1.Enabled = true;
+            numProcess.Enabled = true;
+            AlorithmCombo.Enabled = true;
+            comboBox3.Enabled = true;
+            JobPool.Columns[0].ReadOnly = false;
+            JobPool.Columns[1].ReadOnly = false;
         }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
-            AlorithmCombo.SelectedIndex = 0; // Chọn thuật toán đầu tiên
+            AlorithmCombo.SelectedIndex = 0; 
             comboBox3.SelectedIndex = 0;
+            button1.Enabled = false;
         }
     }
 }
