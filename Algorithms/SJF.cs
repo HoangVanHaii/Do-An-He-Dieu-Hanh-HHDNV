@@ -18,7 +18,7 @@ namespace Algorithms
             Graphics g = panel2.CreateGraphics();
             int unitWidth = 14;
             int height = 80;
-            int y = panel2.Height / 4;
+            int y = panel2.Height / 4 + 20;
             int spacing = 1;
             Color color = GetColorByProcessID(process.ID);
 
@@ -47,7 +47,7 @@ namespace Algorithms
         {
             int unitWidth = 30;
             int height = 50;
-            int y = panel7.Height / 3;
+            int y = panel7.Height / 3 + 10;
             int spacing = 1;
             Color color = GetColorByProcessID(process.ID);
 

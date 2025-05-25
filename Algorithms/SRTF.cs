@@ -18,7 +18,7 @@ namespace Algorithms
             //g.Clear(panel2.BackColor);
             int unitWidth = 14; // Mỗi đơn vị thời gian = 20 pixel
             int height = 80;
-            int y = panel2.Height / 4;
+            int y = panel2.Height / 4 + 20;
             int spacing = 1;
             // Chọn màu theo ID (tuỳ chỉnh)
             Color color = GetColorByProcessID(process.ID);
@@ -68,7 +68,7 @@ namespace Algorithms
             //g.Clear(panel2.BackColor);
             int unitWidth = 30; // Mỗi đơn vị thời gian = 20 pixel
             int height = 50;
-            int y = panel7.Height / 3;
+            int y = panel7.Height / 3 + 10;
             int spacing = 1;
             // Chọn màu theo ID (tuỳ chỉnh)
             Color color = GetColorByProcessID(process.ID);

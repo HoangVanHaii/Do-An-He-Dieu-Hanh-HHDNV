@@ -57,6 +57,9 @@ namespace CPUSchedulerProject
             }
             catch (Exception ex)
             {
+                System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
+                // Hiển thị ToolTip
+                toolTip.Show("Số lượng tiến trình không hợp lệ!!", this, 450, 140, 1500);
                 //MessageBox.Show("Lỗi dữ liệu đầu vào: " + ex.Message);
                 return;
             }

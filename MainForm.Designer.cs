@@ -108,7 +108,7 @@ namespace CPUSchedulerProject {
             this.panel7.Controls.Add(this.label8);
             this.panel7.Location = new System.Drawing.Point(320, 320);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(300, 140);
+            this.panel7.Size = new System.Drawing.Size(359, 140);
             this.panel7.TabIndex = 1;
             // 
             // pictureBox4
@@ -137,7 +137,7 @@ namespace CPUSchedulerProject {
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.panel6.BackColor = System.Drawing.Color.PowderBlue;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel6.Controls.Add(this.pictureBox3);
@@ -171,7 +171,7 @@ namespace CPUSchedulerProject {
             this.CPUlabel.BackColor = System.Drawing.Color.Transparent;
             this.CPUlabel.Font = new System.Drawing.Font("Cooper Black", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CPUlabel.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.CPUlabel.Location = new System.Drawing.Point(210, 100);
+            this.CPUlabel.Location = new System.Drawing.Point(217, 100);
             this.CPUlabel.Name = "CPUlabel";
             this.CPUlabel.Size = new System.Drawing.Size(40, 24);
             this.CPUlabel.TabIndex = 0;
@@ -198,7 +198,7 @@ namespace CPUSchedulerProject {
             this.CurrentTimeLabel.BackColor = System.Drawing.Color.Transparent;
             this.CurrentTimeLabel.Font = new System.Drawing.Font("Cooper Black", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CurrentTimeLabel.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.CurrentTimeLabel.Location = new System.Drawing.Point(108, 100);
+            this.CurrentTimeLabel.Location = new System.Drawing.Point(111, 100);
             this.CurrentTimeLabel.Name = "CurrentTimeLabel";
             this.CurrentTimeLabel.Size = new System.Drawing.Size(23, 24);
             this.CurrentTimeLabel.TabIndex = 0;
@@ -293,7 +293,7 @@ namespace CPUSchedulerProject {
             // 
             // SpeedTB
             // 
-            this.SpeedTB.BackColor = System.Drawing.Color.Teal;
+            this.SpeedTB.BackColor = System.Drawing.Color.PaleGreen;
             this.SpeedTB.LargeChange = 200;
             this.SpeedTB.Location = new System.Drawing.Point(115, 130);
             this.SpeedTB.Maximum = 1000;
@@ -459,12 +459,13 @@ namespace CPUSchedulerProject {
             // JobPool
             // 
             this.JobPool.AllowUserToAddRows = false;
+            this.JobPool.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.JobPool.BackgroundColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.MidnightBlue;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.JobPool.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
@@ -474,19 +475,20 @@ namespace CPUSchedulerProject {
             this.Burst,
             this.Start,
             this.Finish});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.DarkSlateGray;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.JobPool.DefaultCellStyle = dataGridViewCellStyle2;
             this.JobPool.GridColor = System.Drawing.Color.LightGray;
             this.JobPool.Location = new System.Drawing.Point(15, 50);
             this.JobPool.Name = "JobPool";
-            this.JobPool.RowHeadersWidth = 51;
+            this.JobPool.RowHeadersWidth = 55;
             this.JobPool.RowTemplate.Height = 24;
+            this.JobPool.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.JobPool.Size = new System.Drawing.Size(575, 230);
             this.JobPool.TabIndex = 1;
             this.JobPool.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -496,28 +498,24 @@ namespace CPUSchedulerProject {
             this.Arrive.HeaderText = "Arrive";
             this.Arrive.MinimumWidth = 6;
             this.Arrive.Name = "Arrive";
-            this.Arrive.Width = 130;
             // 
             // Burst
             // 
             this.Burst.HeaderText = "Burst";
             this.Burst.MinimumWidth = 6;
             this.Burst.Name = "Burst";
-            this.Burst.Width = 130;
             // 
             // Start
             // 
             this.Start.HeaderText = "Start";
             this.Start.MinimumWidth = 6;
             this.Start.Name = "Start";
-            this.Start.Width = 131;
             // 
             // Finish
             // 
             this.Finish.HeaderText = "Finish";
             this.Finish.MinimumWidth = 6;
             this.Finish.Name = "Finish";
-            this.Finish.Width = 131;
             // 
             // label6
             // 
@@ -543,9 +541,9 @@ namespace CPUSchedulerProject {
             this.panel8.Controls.Add(this.label15);
             this.panel8.Controls.Add(this.WaitingLabel);
             this.panel8.Controls.Add(this.label9);
-            this.panel8.Location = new System.Drawing.Point(630, 320);
+            this.panel8.Location = new System.Drawing.Point(685, 320);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(300, 140);
+            this.panel8.Size = new System.Drawing.Size(245, 140);
             this.panel8.TabIndex = 1;
             this.panel8.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
@@ -566,7 +564,7 @@ namespace CPUSchedulerProject {
             this.TurnaroundLabel.BackColor = System.Drawing.Color.Transparent;
             this.TurnaroundLabel.Font = new System.Drawing.Font("Cooper Black", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TurnaroundLabel.ForeColor = System.Drawing.Color.Indigo;
-            this.TurnaroundLabel.Location = new System.Drawing.Point(130, 100);
+            this.TurnaroundLabel.Location = new System.Drawing.Point(147, 100);
             this.TurnaroundLabel.Name = "TurnaroundLabel";
             this.TurnaroundLabel.Size = new System.Drawing.Size(23, 24);
             this.TurnaroundLabel.TabIndex = 0;
@@ -579,7 +577,7 @@ namespace CPUSchedulerProject {
             this.label14.BackColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.DarkSlateBlue;
-            this.label14.Location = new System.Drawing.Point(130, 50);
+            this.label14.Location = new System.Drawing.Point(131, 61);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(86, 16);
             this.label14.TabIndex = 0;
@@ -592,7 +590,7 @@ namespace CPUSchedulerProject {
             this.label15.BackColor = System.Drawing.Color.Transparent;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.DarkSlateBlue;
-            this.label15.Location = new System.Drawing.Point(15, 50);
+            this.label15.Location = new System.Drawing.Point(16, 61);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(59, 16);
             this.label15.TabIndex = 0;
@@ -605,7 +603,7 @@ namespace CPUSchedulerProject {
             this.WaitingLabel.BackColor = System.Drawing.Color.Transparent;
             this.WaitingLabel.Font = new System.Drawing.Font("Cooper Black", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WaitingLabel.ForeColor = System.Drawing.Color.Indigo;
-            this.WaitingLabel.Location = new System.Drawing.Point(15, 100);
+            this.WaitingLabel.Location = new System.Drawing.Point(17, 100);
             this.WaitingLabel.Name = "WaitingLabel";
             this.WaitingLabel.Size = new System.Drawing.Size(23, 24);
             this.WaitingLabel.TabIndex = 0;
@@ -639,6 +637,7 @@ namespace CPUSchedulerProject {
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CPU Scheduler";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel2.ResumeLayout(false);
