@@ -96,17 +96,17 @@ namespace CPUSchedulerProject.Algorithms
 
         }
         public async Task<(List<Process> Processes, double AvgWaitTime, double AvgTurnaroundTime)> RunAsync(
-    List<Process> processes,
-    Panel panel2,
-    Panel panel7,
-    Label CurrentJob,
-    Label CurrentTimelabel,
-    Label CPUlabel,
-    Label WaitingLabel,
-    Label TurnaroundLabel,
-    DataGridView Jobpool,
-    TrackBar SpeedTB,
-    int quantum)
+            List<Process> processes,
+            Panel panel2,
+            Panel panel7,
+            Label CurrentJob,
+            Label CurrentTimelabel,
+            Label CPUlabel,
+            Label WaitingLabel,
+            Label TurnaroundLabel,
+            DataGridView Jobpool,
+            TrackBar SpeedTB,
+            int quantum)
         {
             var sorted = processes.OrderBy(p => p.ArrivalTime).ThenBy(p => p.ID).ToList();
             Queue<Process> readyQueue = new Queue<Process>();

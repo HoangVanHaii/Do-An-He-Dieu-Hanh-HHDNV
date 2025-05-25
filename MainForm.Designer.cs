@@ -218,11 +218,11 @@ namespace CPUSchedulerProject {
             this.CurrentJobLabel.BackColor = System.Drawing.Color.Transparent;
             this.CurrentJobLabel.Font = new System.Drawing.Font("Cooper Black", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CurrentJobLabel.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.CurrentJobLabel.Location = new System.Drawing.Point(15, 100);
+            this.CurrentJobLabel.Location = new System.Drawing.Point(19, 100);
             this.CurrentJobLabel.Name = "CurrentJobLabel";
-            this.CurrentJobLabel.Size = new System.Drawing.Size(67, 24);
+            this.CurrentJobLabel.Size = new System.Drawing.Size(51, 24);
             this.CurrentJobLabel.TabIndex = 0;
-            this.CurrentJobLabel.Text = "Job 0";
+            this.CurrentJobLabel.Text = "Idle";
             this.CurrentJobLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label11
@@ -310,6 +310,7 @@ namespace CPUSchedulerProject {
             // 
             // AlorithmCombo
             // 
+            this.AlorithmCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AlorithmCombo.ForeColor = System.Drawing.Color.SteelBlue;
             this.AlorithmCombo.FormattingEnabled = true;
             this.AlorithmCombo.Items.AddRange(new object[] {

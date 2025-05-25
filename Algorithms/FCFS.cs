@@ -158,6 +158,7 @@ namespace Algorithms
 
                 double tmp = ((double)waiting / sorted.Count);
                 WaitingLabel.Text = $"{tmp:F3}";
+                CurrentJob.Text = $"JOB {process.ID}";
                 // Chạy theo đơn vị thời gian
                 for (int j = 0; j < process.BurstTime; j++)
                 {
@@ -185,7 +186,6 @@ namespace Algorithms
                 total += process.BurstTime;
                 double CPU = ((double)total / currentTime) * 100;
                 CPUlabel.Text = $"{CPU:F2}%"; // hiển thị 2 chữ số thập phân
-                CurrentJob.Text = $"JOB {process.ID}";
 
                 if (!(i < sorted.Count - 1 && currentTime < sorted[i + 1].ArrivalTime))
                 {

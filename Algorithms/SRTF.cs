@@ -156,7 +156,7 @@ namespace Algorithms
                         currentProcess.StartTime = currentTime;
                         Jobpool.Rows[processList.IndexOf(currentProcess)].Cells[2].Value = currentTime;
                     }
-
+                    
                     DrawGanttChart(panel2, currentProcess, currentProcess.RemainingTime == 1 ? 3 : 0);
                     CurrentJob.Text = $"JOB {currentProcess.ID}";
 

@@ -39,6 +39,11 @@ namespace CPUSchedulerProject
             {
                 JobPool.Rows.Clear();
                 int row = int.Parse(inp);
+                CurrentJobLabel.Text = "Idle";
+                CurrentTimeLabel.Text = "0";
+                CPUlabel.Text = "0%";
+                WaitingLabel.Text = "0";
+                TurnaroundLabel.Text = "0";
                 if(row <= 0)
                 {
                     System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
@@ -67,9 +72,8 @@ namespace CPUSchedulerProject
                 return;
             }
         }
-        private async void button1_Click(object sender, EventArgs e)
+        private void SetUp()
         {
-            string algorithm = AlorithmCombo.SelectedItem?.ToString();
             processList.Clear();
             button1.Enabled = false;
             numProcess.Enabled = false;
@@ -78,6 +82,11 @@ namespace CPUSchedulerProject
             JobPool.Columns[0].ReadOnly = true;
             JobPool.Columns[1].ReadOnly = true;
             panel2.Invalidate();
+        }
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            string algorithm = AlorithmCombo.SelectedItem?.ToString();
+            SetUp();
             try
             {
                 int rowCount = int.Parse(numProcess.Text);
@@ -143,6 +152,10 @@ namespace CPUSchedulerProject
                     SpeedTB
                 );
             }
+            UndosetUp();
+        }
+        private void UndosetUp()
+        {
             button1.Enabled = true;
             numProcess.Enabled = true;
             AlorithmCombo.Enabled = true;
