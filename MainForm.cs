@@ -28,8 +28,16 @@ namespace CPUSchedulerProject
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             JobPool.Invalidate();
-            int rows = int.Parse(numProcess.Text);
-            MessageBox.Show(rows.ToString());
+            try
+            {
+                int rows = int.Parse(numProcess.Text);
+                //MessageBox.Show(rows.ToString());
+            }
+            catch
+            {
+                return;
+            }
+            
         }
 
         private void panel6_Paint(object sender, PaintEventArgs e) { }
