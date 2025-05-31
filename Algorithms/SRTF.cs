@@ -123,21 +123,30 @@ namespace Algorithms
 
             Process currentProcess = null;
             int lastProcessID = -1;
-
-            while (completed < n)
-            {
-                var availableProcesses = processList
+            var availableProcesses = processList
                     .Where(p => p.ArrivalTime <= currentTime && !p.IsCompleted)
                     .OrderBy(p => p.RemainingTime)
                     .ThenBy(p => p.ArrivalTime)
                     .ThenBy(p => p.ID)
                     .ToList();
+            while (completed < n)
+            {
+                int PreviousID = availableProcesses.Any() ? availableProcesses.First().ID : -1;
+                availableProcesses = processList
+                    .Where(p => p.ArrivalTime <= currentTime && !p.IsCompleted)
+                    .OrderBy(p => p.RemainingTime)
+                    .ThenBy(p => p.ArrivalTime)
+                    .ThenBy(p => p.ID)
+                    .ToList();
+                int affterID = availableProcesses.Any() ? availableProcesses.First().ID : -1;
 
+                if (affterID != PreviousID)
+                {
+                    xGant += 3;
+                }
                 if (availableProcesses.Any())
                 {
                     currentProcess = availableProcesses.First();
-
-                    
                     foreach(var process in availableProcesses)
                     {
                         if (process.ArrivalTime <= currentTime &&
@@ -156,8 +165,8 @@ namespace Algorithms
                         currentProcess.StartTime = currentTime;
                         Jobpool.Rows[processList.IndexOf(currentProcess)].Cells[2].Value = currentTime;
                     }
-                    
-                    DrawGanttChart(panel2, currentProcess, currentProcess.RemainingTime == 1 ? 3 : 0);
+                    await Task.Delay(5);
+                    DrawGanttChart(panel2, currentProcess, 0);
                     CurrentJob.Text = $"JOB {currentProcess.ID}";
 
                     await Task.Delay(1100 - SpeedTB.Value);
@@ -165,6 +174,7 @@ namespace Algorithms
                     CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
 
                     currentProcess.RemainingTime--;
+                    total++;
 
                     if (currentProcess.RemainingTime == 0)
                     {
@@ -172,7 +182,6 @@ namespace Algorithms
                         currentProcess.FinishTime = currentTime;
                         currentProcess.TurnaroundTime = currentProcess.FinishTime - currentProcess.ArrivalTime;
                         currentProcess.WaitTime = currentProcess.TurnaroundTime - currentProcess.BurstTime;
-                        total += currentProcess.BurstTime;
 
                         Jobpool.Rows[processList.IndexOf(currentProcess)].Cells[3].Value = currentProcess.FinishTime;
 
@@ -186,9 +195,10 @@ namespace Algorithms
 
                         completed++;
                     }
-
+                    //WaitingLabel.Text = $"{currentProcess.StartTime - currentProcess.ArrivalTime:F3}";
                     double CPU = (total / (double)currentTime) * 100;
-                    CPUlabel.Text = $"{CPU:F2}%";
+                    //CPUlabel.Text = $"{CPU:F2}%";
+                    CPUlabel.Text = CPU % 1 == 0 ? $"{(int)CPU}%" : $"{CPU:F2}%";
                 }
                 else
                 {
@@ -199,9 +209,13 @@ namespace Algorithms
                     DrawGanttChart(panel2, idle, 3, true);
                     await Task.Delay(1100 - SpeedTB.Value);
                     currentTime++;
+                    CurrentJob.Text = "Idle";
                     CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
+                    double CPU = (total / (double)currentTime) * 100;
+                    //CPUlabel.Text = $"{CPU:F2}%";
+                    CPUlabel.Text = CPU % 1 == 0 ? $"{(int)CPU}%" : $"{CPU:F2}%";
                 }
-                if(currentProcess != null &&currentProcess.RemainingTime == 0) { 
+                if (currentProcess != null && currentProcess.RemainingTime == 0) { 
                     panel7.Invalidate();
                 }
                 xReady = 50;
