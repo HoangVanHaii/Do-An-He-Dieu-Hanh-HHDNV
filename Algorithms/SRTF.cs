@@ -154,7 +154,7 @@ namespace Algorithms
                             process != currentProcess
                             )
                         {
-                            await Task.Delay(20);
+                            await Task.Delay(5);
                             DrawReadyList(panel7, process, process.RemainingTime.ToString());
                             lastProcessID = process.ID;
                         }

@@ -117,7 +117,7 @@ namespace Algorithms
             for(int i = 0; i < sorted.Count; i++)
             {
                 var process = sorted[i];
-                await Task.Delay(20);
+                await Task.Delay(5);
                 int k = i;
                 if(currentTime >= process.ArrivalTime)
                 {
@@ -148,8 +148,8 @@ namespace Algorithms
                         }
                         DrawGanttChart(panel2, EmptyCpu, space, isEmptyCpu);
                         await Task.Delay(1100 - SpeedTB.Value); // mô phỏng 1s thực tế
-                        //currentTime++;
-                        
+                        double CPU = ((double)total / currentTime) * 100;
+                        CPUlabel.Text = CPU % 1 == 0 ? $"{(int)CPU}%" : $"{CPU:F2}%";
                     }
                     i -= 1;
                     xReady = 50;
@@ -169,6 +169,7 @@ namespace Algorithms
                 {
                     CurrentTimelabel.Text = $"{currentTime}";
                     currentTime++;
+                    total++;
                     CurrentTimelabel.Text += $" -> {currentTime}";
                     int space = 0;
                     if(j == process.BurstTime - 1)
@@ -176,22 +177,18 @@ namespace Algorithms
                         space = 3;
                     }
                     DrawGanttChart(panel2, process, space);
-                    await Task.Delay(1100 - SpeedTB.Value); // mô phỏng 1s thực tế
+                    await Task.Delay(1100 - SpeedTB.Value); // mô phỏng 
 
-                    
-
+                    double CPU = ((double)total / currentTime) * 100;
+                    CPUlabel.Text = CPU % 1 == 0 ? $"{(int)CPU}%" : $"{CPU:F2}%";
                     for (int t = i + 1; t < sorted.Count; t++)
                     {
                         if (currentTime == sorted[t].ArrivalTime)
                         {
                             DrawReadyList(panel7, sorted[t], sorted[t].BurstTime.ToString());
-                            await Task.Delay(1100 - SpeedTB.Value);
                         }
                     }
                 }
-                total += process.BurstTime;
-                double CPU = ((double)total / currentTime) * 100;
-                CPUlabel.Text = $"{CPU:F2}%"; // hiển thị 2 chữ số thập phân
 
                 if (!(i < sorted.Count - 1 && currentTime < sorted[i + 1].ArrivalTime))
                 {
