@@ -58,10 +58,14 @@ namespace CPUSchedulerProject
                     JobPool.Rows.Add();
                     JobPool.Rows[i].Cells[2].Value = "undefined";
                     JobPool.Rows[i].Cells[3].Value = "undefined";
+                    JobPool.Rows[i].Cells[4].Value = "undefined";
+                    JobPool.Rows[i].Cells[5].Value = "undefined";
                     JobPool.Rows[i].HeaderCell.Value = "P" + (i + 1).ToString();
                 }
                 JobPool.Columns[2].ReadOnly = true;
                 JobPool.Columns[3].ReadOnly = true;
+                JobPool.Columns[4].ReadOnly = true;
+                JobPool.Columns[5].ReadOnly = true;
 
                 JobPool.Invalidate();
                 button1.Enabled = true;
@@ -83,12 +87,18 @@ namespace CPUSchedulerProject
             comboBox3.Enabled = false;
             JobPool.Columns[0].ReadOnly = true;
             JobPool.Columns[1].ReadOnly = true;
+            WaitingLabel.Text = "0";
+            TurnaroundLabel.Text = "0";
+            CurrentJobLabel.Text = "Idle";
+            CurrentTimeLabel.Text = "0";
+            CPUlabel.Text = "0%";
             panel2.Invalidate();
         }
         private async void button1_Click(object sender, EventArgs e)
         {
             string algorithm = AlorithmCombo.SelectedItem?.ToString();
             SetUp();
+       
             try
             {
                 int rowCount = int.Parse(numProcess.Text);
@@ -110,12 +120,14 @@ namespace CPUSchedulerProject
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi dữ liệu đầu vào");
+                UndosetUp();
                 return;
             }
+
             if (algorithm == "FCFS" )
             {
                 FCFS scheduler = new FCFS();
-                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel,TurnaroundLabel, JobPool, SpeedTB);
+                await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel,TurnaroundLabel, JobPool, SpeedTB);
             }
             else if(algorithm == "RR")
             {
@@ -123,36 +135,32 @@ namespace CPUSchedulerProject
                 try
                 {
                     int quantum = int.Parse(tmpQuantum);
+                    if(quantum <= 0)
+                    {
+                        System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
+                        toolTip.Show("Giá trị quantum không hợp lệ!!", this, 450, 140, 1500);
+                        UndosetUp();
+                        return;
+                    }
                     RR scheduler = new RR();
-                    var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB, quantum);
+                    await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB, quantum);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Giá trị Quantum không hợp lệ");
+                    UndosetUp();
                     return;
                 }
-               
             }
             else if (algorithm == "SRTF")
             {
                 SRTF scheduler = new SRTF();
-                var (tmp, avgWait, avgTurnaround) = await scheduler.RunSRTFAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB);
+                await scheduler.RunSRTFAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB);
             }
             else if (algorithm == "SJF")
             {
                 SJF scheduler = new SJF();
-                var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(
-                    processList,
-                    panel2,
-                    panel7,
-                    CurrentJobLabel,
-                    CurrentTimeLabel,
-                    CPUlabel,
-                    WaitingLabel,
-                    TurnaroundLabel,
-                    JobPool,
-                    SpeedTB
-                );
+                await scheduler.RunAsync(processList,panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel, TurnaroundLabel, JobPool, SpeedTB);
             }
             UndosetUp();
         }
@@ -181,8 +189,38 @@ namespace CPUSchedulerProject
 
         private void button2_Click(object sender, EventArgs e)
         {
+            this.Close();
             //isRunning = (isRunning == true) ? false : true;
             //Thread.Sleep(100);
+        }
+
+        private void AlorithmCombo_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            WaitingLabel.Text = "0";
+            TurnaroundLabel.Text = "0";
+            CurrentJobLabel.Text = "Idle";
+            CurrentTimeLabel.Text = "0";
+            CPUlabel.Text = "0%";
+            panel2.Invalidate();
+            string text = numProcess.Text;
+            try
+            {
+                int row = int.Parse(text);
+                for (int i = 0; i < row; i++)
+                {
+                    JobPool.Rows[i].Cells[2].Value = "undefined";
+                    JobPool.Rows[i].Cells[3].Value = "undefined";
+                    JobPool.Rows[i].Cells[4].Value = "undefined";
+                    JobPool.Rows[i].Cells[5].Value = "undefined";
+                    JobPool.Rows[i].HeaderCell.Value = "P" + (i + 1).ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+
+            
         }
     }
 }

@@ -39,6 +39,8 @@ namespace CPUSchedulerProject {
             this.Burst = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Start = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Finish = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Wait = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Turnaround = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -300,7 +302,7 @@ namespace CPUSchedulerProject {
             this.comboBox3.ForeColor = System.Drawing.Color.SteelBlue;
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
-            "0",
+            "1",
             "4",
             "8",
             "12"});
@@ -323,6 +325,7 @@ namespace CPUSchedulerProject {
             this.AlorithmCombo.Name = "AlorithmCombo";
             this.AlorithmCombo.Size = new System.Drawing.Size(165, 21);
             this.AlorithmCombo.TabIndex = 3;
+            this.AlorithmCombo.SelectionChangeCommitted += new System.EventHandler(this.AlorithmCombo_SelectionChangeCommitted);
             // 
             // numProcess
             // 
@@ -342,7 +345,7 @@ namespace CPUSchedulerProject {
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 40);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Finish";
+            this.button2.Text = "Exit";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -431,9 +434,9 @@ namespace CPUSchedulerProject {
             this.panel5.Controls.Add(this.pictureBox2);
             this.panel5.Controls.Add(this.JobPool);
             this.panel5.Controls.Add(this.label6);
-            this.panel5.Location = new System.Drawing.Point(320, 10);
+            this.panel5.Location = new System.Drawing.Point(316, 10);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(610, 300);
+            this.panel5.Size = new System.Drawing.Size(614, 300);
             this.panel5.TabIndex = 0;
             // 
             // pictureBox2
@@ -465,7 +468,9 @@ namespace CPUSchedulerProject {
             this.Arrive,
             this.Burst,
             this.Start,
-            this.Finish});
+            this.Finish,
+            this.Wait,
+            this.Turnaround});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -475,12 +480,12 @@ namespace CPUSchedulerProject {
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.JobPool.DefaultCellStyle = dataGridViewCellStyle2;
             this.JobPool.GridColor = System.Drawing.Color.LightGray;
-            this.JobPool.Location = new System.Drawing.Point(15, 50);
+            this.JobPool.Location = new System.Drawing.Point(10, 50);
             this.JobPool.Name = "JobPool";
             this.JobPool.RowHeadersWidth = 55;
             this.JobPool.RowTemplate.Height = 24;
             this.JobPool.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.JobPool.Size = new System.Drawing.Size(575, 230);
+            this.JobPool.Size = new System.Drawing.Size(595, 230);
             this.JobPool.TabIndex = 1;
             this.JobPool.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -507,6 +512,16 @@ namespace CPUSchedulerProject {
             this.Finish.HeaderText = "Finish";
             this.Finish.MinimumWidth = 6;
             this.Finish.Name = "Finish";
+            // 
+            // Wait
+            // 
+            this.Wait.HeaderText = "Wait";
+            this.Wait.Name = "Wait";
+            // 
+            // Turnaround
+            // 
+            this.Turnaround.HeaderText = "Turnarround";
+            this.Turnaround.Name = "Turnaround";
             // 
             // label6
             // 
@@ -690,5 +705,7 @@ namespace CPUSchedulerProject {
         private System.Windows.Forms.DataGridViewTextBoxColumn Burst;
         private System.Windows.Forms.DataGridViewTextBoxColumn Start;
         private System.Windows.Forms.DataGridViewTextBoxColumn Finish;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Wait;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Turnaround;
     }
 }
