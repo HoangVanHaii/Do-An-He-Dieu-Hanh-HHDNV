@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Data;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CPUSchedulerProject.Algorithms
 {
@@ -13,8 +14,13 @@ namespace CPUSchedulerProject.Algorithms
     {
         int xGant = 50;
         int xReady = 50;
+
+        bool running = MainForm.IsRunning;
+
+
         private void DrawGanttChart(Panel panel2, Process process, int space, bool isEmptyCpu = false)
         {
+            
             Graphics g = panel2.CreateGraphics();
             //g.Clear(panel2.BackColor);
             int unitWidth = 14; // Mỗi đơn vị thời gian = 20 pixel
@@ -105,7 +111,7 @@ namespace CPUSchedulerProject.Algorithms
     Label WaitingLabel,
     Label TurnaroundLabel,
     DataGridView Jobpool,
-    TrackBar SpeedTB,
+    System.Windows.Forms.TrackBar SpeedTB,
     int quantum)
         {
             var sorted = processes.OrderBy(p => p.ArrivalTime).ThenBy(p => p.ID).ToList();
@@ -130,6 +136,7 @@ namespace CPUSchedulerProject.Algorithms
                     if (process.ArrivalTime <= currentTime && !process.IsCompleted && !readyQueue.Contains(process))
                         readyQueue.Enqueue(process);
                 }
+                
 
                 panel7.Invalidate();
                 await Task.Delay(50);
@@ -137,19 +144,13 @@ namespace CPUSchedulerProject.Algorithms
                 if (readyQueue.Count == 0)
                 {
                     // CPU idle
+                    CurrentJob.Text = "Idle";
                     Process idle = new Process { ID = 1000 };
                     DrawGanttChart(panel2, idle, 1, true);
                     await Task.Delay(1100 - SpeedTB.Value);
                     currentTime++;
                     double tmpTotalCPU1 = (totalCPU / currentTime * 100);
-                    if (tmpTotalCPU1 == Math.Floor(tmpTotalCPU1))
-                    {
-                        CPUlabel.Text = $"{(int)tmpTotalCPU1}%";
-                    }
-                    else
-                    {
-                        CPUlabel.Text = $"{tmpTotalCPU1:F2}%";
-                    }
+                    CPUlabel.Text = tmpTotalCPU1 % 1 == 0 ? $"{(int)tmpTotalCPU1}%" : $"{tmpTotalCPU1:F2}%";
                     continue;
                 }
 
@@ -158,6 +159,10 @@ namespace CPUSchedulerProject.Algorithms
                 foreach (var p in readyQueue)
                 {
                     DrawReadyList(panel7, p, p.BurstTime.ToString());
+                    //if (!MainForm.IsRunning)
+                    //{
+                    //    await Task.Delay(5000);
+                    //}
                 }
 
                 int executeTime = Math.Min(quantum, remainingBurst[currentProcess.ID]);
@@ -217,17 +222,10 @@ namespace CPUSchedulerProject.Algorithms
                 TurnaroundLabel.Text = completed > 0 ? $"{(totalTurnaround / completed):F3}" : "0";
                 double tmpTotalCPU = (totalCPU / currentTime * 100);
 
-                if (tmpTotalCPU == Math.Floor(tmpTotalCPU)) // kiểm tra tmpTotalCPU có phải số nguyên không
-                {
-                    CPUlabel.Text = $"{(int)tmpTotalCPU}%"; // Hiển thị không có phần thập phân
-                }
-                else
-                {
-                    CPUlabel.Text = $"{tmpTotalCPU:F2}%"; // Hiển thị 2 chữ số thập phân
-                }
+                CPUlabel.Text = tmpTotalCPU % 1 == 0 ? $"{(int)tmpTotalCPU}%" : $"{tmpTotalCPU:F2}%";
 
             }
-
+            
             return (sorted, totalWaiting / totalProcess, totalTurnaround / totalProcess);
         }
 

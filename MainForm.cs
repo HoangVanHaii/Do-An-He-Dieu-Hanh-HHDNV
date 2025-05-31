@@ -18,7 +18,7 @@ namespace CPUSchedulerProject
         List<Process> processList = new List<Process>();
         double avgWaitTime = 0;
         double avgTurnaroundTime = 0;
-        bool isRunning = true;
+        
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -169,6 +169,13 @@ namespace CPUSchedulerProject
             AlorithmCombo.SelectedIndex = 0; 
             comboBox3.SelectedIndex = 0;
             button1.Enabled = false;
+        }
+        private static bool isRunning = true;
+
+        public static bool IsRunning
+        {
+            get { return isRunning; }
+            set { isRunning = value; }
         }
 
         private void button2_Click(object sender, EventArgs e)
