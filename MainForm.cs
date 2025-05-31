@@ -18,6 +18,7 @@ namespace CPUSchedulerProject
         List<Process> processList = new List<Process>();
         double avgWaitTime = 0;
         double avgTurnaroundTime = 0;
+        bool isRunning = true;
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -110,7 +111,7 @@ namespace CPUSchedulerProject
                 MessageBox.Show("Lỗi dữ liệu đầu vào");
                 return;
             }
-            if (algorithm == "FCFS")
+            if (algorithm == "FCFS" )
             {
                 FCFS scheduler = new FCFS();
                 var (tmp, avgWait, avgTurnaround) = await scheduler.RunAsync(processList, panel2, panel7, CurrentJobLabel, CurrentTimeLabel, CPUlabel, WaitingLabel,TurnaroundLabel, JobPool, SpeedTB);
@@ -168,6 +169,12 @@ namespace CPUSchedulerProject
             AlorithmCombo.SelectedIndex = 0; 
             comboBox3.SelectedIndex = 0;
             button1.Enabled = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            isRunning = (isRunning == true) ? false : true;
+            
         }
     }
 }
