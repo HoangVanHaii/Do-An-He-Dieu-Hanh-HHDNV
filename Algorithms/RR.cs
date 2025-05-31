@@ -96,53 +96,60 @@ namespace CPUSchedulerProject.Algorithms
 
         }
         public async Task<(List<Process> Processes, double AvgWaitTime, double AvgTurnaroundTime)> RunAsync(
-            List<Process> processes,
-            Panel panel2,
-            Panel panel7,
-            Label CurrentJob,
-            Label CurrentTimelabel,
-            Label CPUlabel,
-            Label WaitingLabel,
-            Label TurnaroundLabel,
-            DataGridView Jobpool,
-            TrackBar SpeedTB,
-            int quantum)
+    List<Process> processes,
+    Panel panel2,
+    Panel panel7,
+    Label CurrentJob,
+    Label CurrentTimelabel,
+    Label CPUlabel,
+    Label WaitingLabel,
+    Label TurnaroundLabel,
+    DataGridView Jobpool,
+    TrackBar SpeedTB,
+    int quantum)
         {
             var sorted = processes.OrderBy(p => p.ArrivalTime).ThenBy(p => p.ID).ToList();
             Queue<Process> readyQueue = new Queue<Process>();
             int currentTime = 0;
-            double waiting = 0;
-            double turnaround = 0;
+            double totalWaiting = 0;
+            double totalTurnaround = 0;
             double totalCPU = 0;
-            Dictionary<int, int> remainingBurst = sorted.ToDictionary(p => p.ID, p => p.BurstTime);
             int completed = 0;
             int totalProcess = sorted.Count;
 
-            xReady = 50; // reset vị trí vẽ ready queue
-            xGant = 50; // reset vị trí vẽ gantt chart
+            Dictionary<int, int> remainingBurst = sorted.ToDictionary(p => p.ID, p => p.BurstTime);
+
+            xReady = 50;
+            xGant = 50;
 
             while (completed < totalProcess)
             {
-                // Thêm tiến trình mới vào hàng đợi nếu đến thời điểm hiện tại
+                // Đưa tiến trình mới đến vào hàng đợi ready
                 foreach (var process in sorted)
                 {
                     if (process.ArrivalTime <= currentTime && !process.IsCompleted && !readyQueue.Contains(process))
                         readyQueue.Enqueue(process);
                 }
 
-                // Vẽ hàng đợi readyQueue ra panel7
-                panel7.Invalidate(); // xóa panel cũ
-                await Task.Delay(50); // delay để nhìn rõ hơn
-                
+                panel7.Invalidate();
+                await Task.Delay(50);
+
                 if (readyQueue.Count == 0)
                 {
-                    xReady = 50;
-                    //await Task.Delay(50); // delay để nhìn rõ hơn
-                    await Task.Delay(1100 - SpeedTB.Value);
-                    //MessageBox.Show("2");
+                    // CPU idle
                     Process idle = new Process { ID = 1000 };
                     DrawGanttChart(panel2, idle, 1, true);
+                    await Task.Delay(1100 - SpeedTB.Value);
                     currentTime++;
+                    double tmpTotalCPU1 = (totalCPU / currentTime * 100);
+                    if (tmpTotalCPU1 == Math.Floor(tmpTotalCPU1))
+                    {
+                        CPUlabel.Text = $"{(int)tmpTotalCPU1}%";
+                    }
+                    else
+                    {
+                        CPUlabel.Text = $"{tmpTotalCPU1:F2}%";
+                    }
                     continue;
                 }
 
@@ -152,14 +159,13 @@ namespace CPUSchedulerProject.Algorithms
                 {
                     DrawReadyList(panel7, p, p.BurstTime.ToString());
                 }
-                await Task.Delay(50); // delay để nhìn rõ hơn
+
                 int executeTime = Math.Min(quantum, remainingBurst[currentProcess.ID]);
 
-                // Nếu lần đầu chạy thì set StartTime
                 if (currentProcess.StartTime == -1)
                 {
                     currentProcess.StartTime = currentTime;
-                    Jobpool.Rows[currentProcess.ID - 1].Cells[2].Value = currentTime;
+                    Jobpool.Rows[currentProcess.ID - 1].Cells[2].Value = currentTime; // StartTime
                 }
 
                 for (int t = 0; t < executeTime; t++)
@@ -169,44 +175,64 @@ namespace CPUSchedulerProject.Algorithms
 
                     CurrentJob.Text = $"JOB {currentProcess.ID}";
                     CurrentTimelabel.Text = $"{currentTime} -> {currentTime + 1}";
+
                     currentTime++;
+                    totalCPU++;
+
+                    // Cập nhật UI realtime có thể thêm nếu muốn
                 }
 
                 remainingBurst[currentProcess.ID] -= executeTime;
-                totalCPU += executeTime;
 
                 if (remainingBurst[currentProcess.ID] == 0)
                 {
+                    // Hoàn thành tiến trình
                     currentProcess.FinishTime = currentTime;
                     currentProcess.TurnaroundTime = currentProcess.FinishTime - currentProcess.ArrivalTime;
                     currentProcess.WaitTime = currentProcess.TurnaroundTime - currentProcess.BurstTime;
                     currentProcess.IsCompleted = true;
 
-                    Jobpool.Rows[currentProcess.ID - 1].Cells[3].Value = currentProcess.FinishTime;
+                    Jobpool.Rows[currentProcess.ID - 1].Cells[3].Value = currentProcess.FinishTime; // FinishTime
 
-                    waiting += currentProcess.WaitTime;
-                    turnaround += currentProcess.TurnaroundTime;
+                    totalWaiting += currentProcess.WaitTime;
+                    totalTurnaround += currentProcess.TurnaroundTime;
                     completed++;
                 }
                 else
                 {
-                    // Cập nhật ready queue thêm những tiến trình mới đến (ngoại trừ tiến trình hiện tại)
+                    // Thêm tiến trình mới vào ready queue nếu chưa có
                     foreach (var proc in sorted)
                     {
-                        if (proc.ArrivalTime <= currentTime && !proc.IsCompleted && !readyQueue.Contains(proc) && proc.ID != currentProcess.ID) { 
+                        if (proc.ArrivalTime <= currentTime && !proc.IsCompleted && !readyQueue.Contains(proc) && proc.ID != currentProcess.ID)
+                        {
                             readyQueue.Enqueue(proc);
                         }
                     }
-                    // Đưa tiến trình chưa hoàn thành về cuối queue
+
+                    // Đưa currentProcess trở lại cuối hàng đợi
                     readyQueue.Enqueue(currentProcess);
                 }
 
-                WaitingLabel.Text = $"{(waiting / totalProcess):F2}";
-                TurnaroundLabel.Text = $"{(turnaround / totalProcess):F2}";
-                CPUlabel.Text = $"{(totalCPU / currentTime * 100):F2}%";
+                WaitingLabel.Text = $"{(totalWaiting / totalProcess):F3}";
+                TurnaroundLabel.Text = completed > 0 ? $"{(totalTurnaround / completed):F3}" : "0";
+                double tmpTotalCPU = (totalCPU / currentTime * 100);
+
+                if (tmpTotalCPU == Math.Floor(tmpTotalCPU)) // kiểm tra tmpTotalCPU có phải số nguyên không
+                {
+                    CPUlabel.Text = $"{(int)tmpTotalCPU}%"; // Hiển thị không có phần thập phân
+                }
+                else
+                {
+                    CPUlabel.Text = $"{tmpTotalCPU:F2}%"; // Hiển thị 2 chữ số thập phân
+                }
+
             }
 
-            return (sorted, waiting / totalProcess, turnaround / totalProcess);
+            return (sorted, totalWaiting / totalProcess, totalTurnaround / totalProcess);
         }
+
+
+
+
     }
-   }
+}
