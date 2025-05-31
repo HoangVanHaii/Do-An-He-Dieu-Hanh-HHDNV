@@ -94,16 +94,16 @@ namespace Algorithms
         }
 
         public async Task<(List<Process> Processes, double AvgWaitTime, double AvgTurnaroundTime)> RunAsync(
-    List<Process> processes,
-    Panel panel2,
-    Panel panel7,
-    Label CurrentJob,
-    Label CurrentTimelabel,
-    Label CPUlabel,
-    Label WaitingLabel,
-    Label TurnaroundLabel,
-    DataGridView Jobpool,
-    TrackBar SpeedTB)
+        List<Process> processes,
+        Panel panel2,
+        Panel panel7,
+        Label CurrentJob,
+        Label CurrentTimelabel,
+        Label CPUlabel,
+        Label WaitingLabel,
+        Label TurnaroundLabel,
+        DataGridView Jobpool,
+        TrackBar SpeedTB)
         {
             double total = 0, waiting = 0, turnaround = 0;
             int currentTime = 0;
@@ -128,10 +128,12 @@ namespace Algorithms
                 if (readyQueue.Count == 0)
                 {
                     // CPU idle
+                    currentTime++;
+                    CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
+                    CurrentJob.Text = "Idle";
                     await Task.Delay(20);
                     DrawGanttChart(panel2, new Process { ID = 1000 }, 3, true);
                     await Task.Delay(1100 - SpeedTB.Value);
-                    currentTime++;
                     xReady = 50;
                     panel7.Invalidate();
                     continue;
@@ -148,12 +150,6 @@ namespace Algorithms
 
                 for (int i = 0; i < process.BurstTime; i++)
                 {
-                    await Task.Delay(20);
-                    DrawGanttChart(panel2, process, i == process.BurstTime - 1 ? 3 : 0);
-                    await Task.Delay(1100 - SpeedTB.Value);
-
-                    currentTime++;
-                    CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
 
                     // Cập nhật danh sách ready *loại bỏ tiến trình đang chạy* trong Ready list
                     var readyToDraw = processesCopy
@@ -170,10 +166,15 @@ namespace Algorithms
                         await Task.Delay(20);
                         DrawReadyList(panel7, p, p.BurstTime.ToString());
                     }
+                    CurrentJob.Text = $"JOB {process.ID}";
+                    currentTime++;
+                    CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
+                    await Task.Delay(20);
+                    DrawGanttChart(panel2, process, i == process.BurstTime - 1 ? 3 : 0);
+                    await Task.Delay(1100 - SpeedTB.Value);
                 }
 
                 total += process.BurstTime;
-                CurrentJob.Text = $"JOB {process.ID}";
                 CPUlabel.Text = $"{(total / currentTime * 100):F2}%";
 
                 process.FinishTime = currentTime;

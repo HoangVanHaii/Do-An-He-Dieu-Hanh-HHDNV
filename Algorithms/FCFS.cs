@@ -117,7 +117,7 @@ namespace Algorithms
             for(int i = 0; i < sorted.Count; i++)
             {
                 var process = sorted[i];
-                await Task.Delay(100);
+                await Task.Delay(20);
                 int k = i;
                 if(currentTime >= process.ArrivalTime)
                 {
@@ -135,6 +135,10 @@ namespace Algorithms
                     bool isEmptyCpu = true;
                     for (int j = currentTime; j < process.ArrivalTime; j++)
                     {
+                        CurrentJob.Text = "Idle";
+                        CurrentTimelabel.Text = $"{currentTime}";
+                        currentTime++;
+                        CurrentTimelabel.Text += $" -> {currentTime}";
                         Process EmptyCpu = new Process();
                         EmptyCpu.ID = 1000;
                         int space = 0;
@@ -144,7 +148,8 @@ namespace Algorithms
                         }
                         DrawGanttChart(panel2, EmptyCpu, space, isEmptyCpu);
                         await Task.Delay(1100 - SpeedTB.Value); // mô phỏng 1s thực tế
-                        currentTime++;                        
+                        //currentTime++;
+                        
                     }
                     i -= 1;
                     xReady = 50;
@@ -162,6 +167,9 @@ namespace Algorithms
                 // Chạy theo đơn vị thời gian
                 for (int j = 0; j < process.BurstTime; j++)
                 {
+                    CurrentTimelabel.Text = $"{currentTime}";
+                    currentTime++;
+                    CurrentTimelabel.Text += $" -> {currentTime}";
                     int space = 0;
                     if(j == process.BurstTime - 1)
                     {
@@ -170,9 +178,7 @@ namespace Algorithms
                     DrawGanttChart(panel2, process, space);
                     await Task.Delay(1100 - SpeedTB.Value); // mô phỏng 1s thực tế
 
-                    CurrentTimelabel.Text = $"{currentTime}";
-                    currentTime++;
-                    CurrentTimelabel.Text += $" -> {currentTime}";
+                    
 
                     for (int t = i + 1; t < sorted.Count; t++)
                     {
