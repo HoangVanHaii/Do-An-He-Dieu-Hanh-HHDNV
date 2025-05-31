@@ -54,8 +54,8 @@ namespace CPUSchedulerProject
                 for (int i = 0; i < row; i++)
                 {
                     JobPool.Rows.Add();
-                    JobPool.Rows[i].Cells[2].Value = 0;
-                    JobPool.Rows[i].Cells[3].Value = 0;
+                    JobPool.Rows[i].Cells[2].Value = "undefined";
+                    JobPool.Rows[i].Cells[3].Value = "undefined";
                     JobPool.Rows[i].HeaderCell.Value = "P" + (i + 1).ToString();
                 }
                 JobPool.Columns[2].ReadOnly = true;
