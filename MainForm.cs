@@ -6,6 +6,7 @@ using Data;
 using System.Drawing;
 using System.Threading.Tasks;
 using CPUSchedulerProject.Algorithms;
+using System.Threading;
 
 namespace CPUSchedulerProject
 {
@@ -180,8 +181,8 @@ namespace CPUSchedulerProject
 
         private void button2_Click(object sender, EventArgs e)
         {
-            isRunning = (isRunning == true) ? false : true;
-            
+            //isRunning = (isRunning == true) ? false : true;
+            //Thread.Sleep(100);
         }
     }
 }

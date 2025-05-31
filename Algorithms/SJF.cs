@@ -131,7 +131,9 @@ namespace Algorithms
                     currentTime++;
                     CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
                     CurrentJob.Text = "Idle";
-                    await Task.Delay(20);
+                    double CPU = ((double)total / currentTime) * 100;
+                    CPUlabel.Text = CPU % 1 == 0 ? $"{(int)CPU}%" : $"{CPU:F2}%";
+                    await Task.Delay(5);
                     DrawGanttChart(panel2, new Process { ID = 1000 }, 3, true);
                     await Task.Delay(1100 - SpeedTB.Value);
                     xReady = 50;
@@ -169,13 +171,15 @@ namespace Algorithms
                     CurrentJob.Text = $"JOB {process.ID}";
                     currentTime++;
                     CurrentTimelabel.Text = $"{currentTime - 1} -> {currentTime}";
-                    await Task.Delay(20);
+                    total ++;
+                    double CPU = ((double)total / currentTime) * 100;
+                    CPUlabel.Text = CPU % 1 == 0 ? $"{(int)CPU}%" : $"{CPU:F2}%";
+                    await Task.Delay(5);
                     DrawGanttChart(panel2, process, i == process.BurstTime - 1 ? 3 : 0);
                     await Task.Delay(1100 - SpeedTB.Value);
                 }
 
-                total += process.BurstTime;
-                CPUlabel.Text = $"{(total / currentTime * 100):F2}%";
+                
 
                 process.FinishTime = currentTime;
                 process.TurnaroundTime = process.FinishTime - process.ArrivalTime;
