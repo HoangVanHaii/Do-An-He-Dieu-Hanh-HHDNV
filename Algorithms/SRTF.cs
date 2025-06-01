@@ -61,10 +61,7 @@ namespace Algorithms
                     .ToList();
                 int affterID = availableProcesses.Any() ? availableProcesses.First().ID : -1;
 
-                if (affterID != PreviousID)
-                {
-                    xGant += 3;
-                }
+                
                 if (availableProcesses.Any())
                 {
                     currentProcess = availableProcesses.First();
@@ -87,6 +84,11 @@ namespace Algorithms
                     }
                     await Task.Delay(5);
                     isEmptyCPU = false;
+                    
+                    if (affterID != PreviousID && PreviousID != -1 )
+                    {
+                        xGant += 3;
+                    }
                     helper.DrawGanttChart(panel2, currentProcess, 0, ref xGant, ref isEmptyCPU);
                     CurrentJob.Text = $"JOB {currentProcess.ID}";
 

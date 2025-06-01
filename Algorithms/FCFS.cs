@@ -66,6 +66,7 @@ namespace Algorithms
                             space = 3;
                         }
                         isEmptyCPU = true;
+                        await Task.Delay(5);
                         helper.DrawGanttChart(panel2, EmptyCpu, space, ref xGant,ref isEmptyCPU);
                         await Task.Delay(1100 - SpeedTB.Value); // mô phỏng 1s thực tế
                         double CPU = ((double)total / currentTime) * 100;
@@ -97,6 +98,7 @@ namespace Algorithms
                         space = 3;
                     }
                     isEmptyCPU = false;
+                    await Task.Delay(5);
                     helper.DrawGanttChart(panel2, process, space,ref xGant, ref isEmptyCPU);
                     await Task.Delay(1100 - SpeedTB.Value); // mô phỏng 
 

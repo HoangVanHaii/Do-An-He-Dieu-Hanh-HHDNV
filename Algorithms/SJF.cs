@@ -56,8 +56,9 @@ namespace Algorithms
                     CurrentJob.Text = "Idle";
                     double CPU = ((double)total / currentTime) * 100;
                     CPUlabel.Text = CPU % 1 == 0 ? $"{(int)CPU}%" : $"{CPU:F2}%";
-                    await Task.Delay(5);
                     isEmptyCPU = true;
+                    await Task.Delay(5);
+
                     helper.DrawGanttChart(panel2, new Process { ID = 1000 }, 3, ref xGant, ref isEmptyCPU);
                     await Task.Delay(1100 - SpeedTB.Value);
                     xReady = 50;
@@ -101,7 +102,7 @@ namespace Algorithms
                     CPUlabel.Text = CPU % 1 == 0 ? $"{(int)CPU}%" : $"{CPU:F2}%";
                     isEmptyCPU = false;
 
-                    await Task.Delay(5);
+                    await Task.Delay(2);
                     helper.DrawGanttChart(panel2, process, i == process.BurstTime - 1 ? 3 : 0, ref xGant, ref isEmptyCPU);
                     await Task.Delay(1100 - SpeedTB.Value);
                 }
