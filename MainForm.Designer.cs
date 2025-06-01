@@ -97,7 +97,7 @@ namespace CPUSchedulerProject {
             this.label10.ForeColor = System.Drawing.Color.SeaGreen;
             this.label10.Location = new System.Drawing.Point(45, 15);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(188, 25);
+            this.label10.Size = new System.Drawing.Size(233, 31);
             this.label10.TabIndex = 0;
             this.label10.Text = "GANTT CHART";
             // 
@@ -132,7 +132,7 @@ namespace CPUSchedulerProject {
             this.label8.ForeColor = System.Drawing.Color.DarkOrange;
             this.label8.Location = new System.Drawing.Point(45, 15);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(207, 27);
+            this.label8.Size = new System.Drawing.Size(263, 35);
             this.label8.TabIndex = 0;
             this.label8.Text = "READY QUEUE";
             // 
@@ -173,7 +173,7 @@ namespace CPUSchedulerProject {
             this.CPUlabel.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.CPUlabel.Location = new System.Drawing.Point(217, 100);
             this.CPUlabel.Name = "CPUlabel";
-            this.CPUlabel.Size = new System.Drawing.Size(40, 24);
+            this.CPUlabel.Size = new System.Drawing.Size(52, 31);
             this.CPUlabel.TabIndex = 0;
             this.CPUlabel.Text = "0%";
             this.CPUlabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -186,7 +186,7 @@ namespace CPUSchedulerProject {
             this.label13.ForeColor = System.Drawing.Color.Navy;
             this.label13.Location = new System.Drawing.Point(210, 50);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(75, 16);
+            this.label13.Size = new System.Drawing.Size(94, 20);
             this.label13.TabIndex = 0;
             this.label13.Text = "Utilization";
             // 
@@ -198,7 +198,7 @@ namespace CPUSchedulerProject {
             this.CurrentTimeLabel.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.CurrentTimeLabel.Location = new System.Drawing.Point(111, 100);
             this.CurrentTimeLabel.Name = "CurrentTimeLabel";
-            this.CurrentTimeLabel.Size = new System.Drawing.Size(23, 24);
+            this.CurrentTimeLabel.Size = new System.Drawing.Size(30, 31);
             this.CurrentTimeLabel.TabIndex = 0;
             this.CurrentTimeLabel.Text = "0";
             this.CurrentTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -211,7 +211,7 @@ namespace CPUSchedulerProject {
             this.label12.ForeColor = System.Drawing.Color.Navy;
             this.label12.Location = new System.Drawing.Point(108, 50);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(95, 16);
+            this.label12.Size = new System.Drawing.Size(119, 20);
             this.label12.TabIndex = 0;
             this.label12.Text = "Current Time";
             // 
@@ -223,7 +223,7 @@ namespace CPUSchedulerProject {
             this.CurrentJobLabel.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.CurrentJobLabel.Location = new System.Drawing.Point(19, 100);
             this.CurrentJobLabel.Name = "CurrentJobLabel";
-            this.CurrentJobLabel.Size = new System.Drawing.Size(51, 24);
+            this.CurrentJobLabel.Size = new System.Drawing.Size(68, 31);
             this.CurrentJobLabel.TabIndex = 0;
             this.CurrentJobLabel.Text = "Idle";
             this.CurrentJobLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -236,7 +236,7 @@ namespace CPUSchedulerProject {
             this.label11.ForeColor = System.Drawing.Color.Navy;
             this.label11.Location = new System.Drawing.Point(15, 50);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(86, 16);
+            this.label11.Size = new System.Drawing.Size(108, 20);
             this.label11.TabIndex = 0;
             this.label11.Text = "Current Job";
             // 
@@ -248,7 +248,7 @@ namespace CPUSchedulerProject {
             this.label7.ForeColor = System.Drawing.Color.RoyalBlue;
             this.label7.Location = new System.Drawing.Point(45, 15);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(67, 27);
+            this.label7.Size = new System.Drawing.Size(84, 35);
             this.label7.TabIndex = 0;
             this.label7.Text = "CPU";
             // 
@@ -293,8 +293,8 @@ namespace CPUSchedulerProject {
             this.SpeedTB.Maximum = 1000;
             this.SpeedTB.Minimum = 100;
             this.SpeedTB.Name = "SpeedTB";
-            this.SpeedTB.Size = new System.Drawing.Size(165, 45);
-            this.SpeedTB.TabIndex = 4;
+            this.SpeedTB.Size = new System.Drawing.Size(165, 56);
+            this.SpeedTB.TabIndex = 6;
             this.SpeedTB.Value = 550;
             // 
             // comboBox3
@@ -308,8 +308,8 @@ namespace CPUSchedulerProject {
             "12"});
             this.comboBox3.Location = new System.Drawing.Point(115, 189);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(165, 21);
-            this.comboBox3.TabIndex = 3;
+            this.comboBox3.Size = new System.Drawing.Size(165, 24);
+            this.comboBox3.TabIndex = 7;
             // 
             // AlorithmCombo
             // 
@@ -323,8 +323,8 @@ namespace CPUSchedulerProject {
             "RR"});
             this.AlorithmCombo.Location = new System.Drawing.Point(115, 89);
             this.AlorithmCombo.Name = "AlorithmCombo";
-            this.AlorithmCombo.Size = new System.Drawing.Size(165, 21);
-            this.AlorithmCombo.TabIndex = 3;
+            this.AlorithmCombo.Size = new System.Drawing.Size(165, 24);
+            this.AlorithmCombo.TabIndex = 6;
             this.AlorithmCombo.SelectionChangeCommitted += new System.EventHandler(this.AlorithmCombo_SelectionChangeCommitted);
             // 
             // numProcess
@@ -332,8 +332,8 @@ namespace CPUSchedulerProject {
             this.numProcess.ForeColor = System.Drawing.Color.SteelBlue;
             this.numProcess.Location = new System.Drawing.Point(115, 50);
             this.numProcess.Name = "numProcess";
-            this.numProcess.Size = new System.Drawing.Size(165, 20);
-            this.numProcess.TabIndex = 2;
+            this.numProcess.Size = new System.Drawing.Size(165, 22);
+            this.numProcess.TabIndex = 0;
             this.numProcess.TextChanged += new System.EventHandler(this.numProcess_TextChanged);
             // 
             // button2
@@ -344,7 +344,7 @@ namespace CPUSchedulerProject {
             this.button2.Location = new System.Drawing.Point(180, 240);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 40);
-            this.button2.TabIndex = 1;
+            this.button2.TabIndex = 9;
             this.button2.Text = "Exit";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -360,7 +360,7 @@ namespace CPUSchedulerProject {
             this.button1.Location = new System.Drawing.Point(15, 240);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 40);
-            this.button1.TabIndex = 1;
+            this.button1.TabIndex = 10;
             this.button1.Text = "Start";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button1.UseVisualStyleBackColor = false;
@@ -374,8 +374,8 @@ namespace CPUSchedulerProject {
             this.label5.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.label5.Location = new System.Drawing.Point(15, 190);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 16);
-            this.label5.TabIndex = 0;
+            this.label5.Size = new System.Drawing.Size(84, 20);
+            this.label5.TabIndex = 6;
             this.label5.Text = "Quantum";
             // 
             // label4
@@ -386,8 +386,8 @@ namespace CPUSchedulerProject {
             this.label4.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.label4.Location = new System.Drawing.Point(15, 130);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 16);
-            this.label4.TabIndex = 0;
+            this.label4.Size = new System.Drawing.Size(61, 20);
+            this.label4.TabIndex = 9;
             this.label4.Text = "Speed";
             // 
             // label3
@@ -398,8 +398,8 @@ namespace CPUSchedulerProject {
             this.label3.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.label3.Location = new System.Drawing.Point(15, 90);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 16);
-            this.label3.TabIndex = 0;
+            this.label3.Size = new System.Drawing.Size(89, 20);
+            this.label3.TabIndex = 4;
             this.label3.Text = "Algorithm";
             // 
             // label2
@@ -410,8 +410,8 @@ namespace CPUSchedulerProject {
             this.label2.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.label2.Location = new System.Drawing.Point(15, 50);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(93, 16);
-            this.label2.TabIndex = 0;
+            this.label2.Size = new System.Drawing.Size(115, 20);
+            this.label2.TabIndex = 9;
             this.label2.Text = "Num of Jobs";
             // 
             // label1
@@ -422,8 +422,8 @@ namespace CPUSchedulerProject {
             this.label1.ForeColor = System.Drawing.Color.SeaGreen;
             this.label1.Location = new System.Drawing.Point(45, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 27);
-            this.label1.TabIndex = 0;
+            this.label1.Size = new System.Drawing.Size(106, 35);
+            this.label1.TabIndex = 5;
             this.label1.Text = "DATA";
             // 
             // panel5
@@ -459,8 +459,8 @@ namespace CPUSchedulerProject {
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.MidnightBlue;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Transparent;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.JobPool.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.JobPool.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -475,8 +475,8 @@ namespace CPUSchedulerProject {
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.DarkSlateGray;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.JobPool.DefaultCellStyle = dataGridViewCellStyle2;
             this.JobPool.GridColor = System.Drawing.Color.LightGray;
@@ -516,11 +516,13 @@ namespace CPUSchedulerProject {
             // Wait
             // 
             this.Wait.HeaderText = "Wait";
+            this.Wait.MinimumWidth = 6;
             this.Wait.Name = "Wait";
             // 
             // Turnaround
             // 
             this.Turnaround.HeaderText = "Turnarround";
+            this.Turnaround.MinimumWidth = 6;
             this.Turnaround.Name = "Turnaround";
             // 
             // label6
@@ -531,8 +533,8 @@ namespace CPUSchedulerProject {
             this.label6.ForeColor = System.Drawing.Color.IndianRed;
             this.label6.Location = new System.Drawing.Point(45, 15);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(148, 27);
-            this.label6.TabIndex = 0;
+            this.label6.Size = new System.Drawing.Size(189, 35);
+            this.label6.TabIndex = 1;
             this.label6.Text = "JOB POOL";
             // 
             // panel8
@@ -570,7 +572,7 @@ namespace CPUSchedulerProject {
             this.TurnaroundLabel.ForeColor = System.Drawing.Color.Indigo;
             this.TurnaroundLabel.Location = new System.Drawing.Point(147, 100);
             this.TurnaroundLabel.Name = "TurnaroundLabel";
-            this.TurnaroundLabel.Size = new System.Drawing.Size(23, 24);
+            this.TurnaroundLabel.Size = new System.Drawing.Size(30, 31);
             this.TurnaroundLabel.TabIndex = 0;
             this.TurnaroundLabel.Text = "0";
             // 
@@ -582,7 +584,7 @@ namespace CPUSchedulerProject {
             this.label14.ForeColor = System.Drawing.Color.DarkSlateBlue;
             this.label14.Location = new System.Drawing.Point(131, 61);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(86, 16);
+            this.label14.Size = new System.Drawing.Size(104, 20);
             this.label14.TabIndex = 0;
             this.label14.Text = "Turnaround";
             // 
@@ -594,7 +596,7 @@ namespace CPUSchedulerProject {
             this.label15.ForeColor = System.Drawing.Color.DarkSlateBlue;
             this.label15.Location = new System.Drawing.Point(16, 61);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(59, 16);
+            this.label15.Size = new System.Drawing.Size(72, 20);
             this.label15.TabIndex = 0;
             this.label15.Text = "Waiting";
             // 
@@ -606,7 +608,7 @@ namespace CPUSchedulerProject {
             this.WaitingLabel.ForeColor = System.Drawing.Color.Indigo;
             this.WaitingLabel.Location = new System.Drawing.Point(17, 100);
             this.WaitingLabel.Name = "WaitingLabel";
-            this.WaitingLabel.Size = new System.Drawing.Size(23, 24);
+            this.WaitingLabel.Size = new System.Drawing.Size(30, 31);
             this.WaitingLabel.TabIndex = 0;
             this.WaitingLabel.Text = "0";
             // 
@@ -618,7 +620,7 @@ namespace CPUSchedulerProject {
             this.label9.ForeColor = System.Drawing.Color.MediumOrchid;
             this.label9.Location = new System.Drawing.Point(45, 15);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(142, 27);
+            this.label9.Size = new System.Drawing.Size(179, 35);
             this.label9.TabIndex = 0;
             this.label9.Text = "AVERAGE";
             // 

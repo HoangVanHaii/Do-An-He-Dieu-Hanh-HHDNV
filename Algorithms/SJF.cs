@@ -90,7 +90,7 @@ namespace Algorithms
                     xReady = 50;
                     foreach (var p in readyToDraw)
                     {
-                        await Task.Delay(20);
+                        await Task.Delay(10);
                         helper.DrawReadyList(panel7, p, p.BurstTime.ToString(), ref xReady);
                     }
                     CurrentJob.Text = $"JOB {process.ID}";
@@ -102,7 +102,7 @@ namespace Algorithms
                     CPUlabel.Text = CPU % 1 == 0 ? $"{(int)CPU}%" : $"{CPU:F2}%";
                     isEmptyCPU = false;
 
-                    await Task.Delay(2);
+                    await Task.Delay(20);
                     helper.DrawGanttChart(panel2, process, i == process.BurstTime - 1 ? 3 : 0, ref xGant, ref isEmptyCPU);
                     await Task.Delay(1100 - SpeedTB.Value);
                 }
